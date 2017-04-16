@@ -1,10 +1,26 @@
 package routers
 
 import (
-	"github.com/kapmahc/h2o/controllers"
 	"github.com/astaxie/beego"
+	"github.com/kapmahc/h2o/engines/auth"
+	"github.com/kapmahc/h2o/engines/forum"
+	"github.com/kapmahc/h2o/engines/ops/mail"
+	"github.com/kapmahc/h2o/engines/ops/vpn"
+	"github.com/kapmahc/h2o/engines/reading"
+	"github.com/kapmahc/h2o/engines/shop"
 )
 
 func init() {
-    beego.Router("/", &controllers.MainController{})
+	beego.Include(&auth.Controller{})
+
+	for k, v := range map[string]beego.ControllerInterface{
+		"/forum":    &forum.Controller{},
+		"/reading":  &reading.Controller{},
+		"/shop":     &shop.Controller{},
+		"/ops/mail": &mail.Controller{},
+		"/ops/vpn":  &vpn.Controller{},
+	} {
+		beego.AddNamespace(beego.NewNamespace(k, beego.NSInclude(v)))
+	}
+
 }

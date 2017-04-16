@@ -1,0 +1,13 @@
+
+# BEE
+/h2o
+/h2o.tar.gz
+/lastupdate.tmp
+/routers/comments*.go
+
+# Editor
+.*.swp
+.*.un~
+
+# Test
+/tmp
