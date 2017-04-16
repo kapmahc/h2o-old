@@ -8,10 +8,14 @@ import (
 	"github.com/kapmahc/h2o/engines/ops/vpn"
 	"github.com/kapmahc/h2o/engines/reading"
 	"github.com/kapmahc/h2o/engines/shop"
+	"github.com/kapmahc/h2o/engines/site"
 )
 
 func init() {
-	beego.Include(&auth.Controller{})
+	beego.Include(
+		&site.Controller{},
+		&auth.Controller{},
+	)
 
 	for k, v := range map[string]beego.ControllerInterface{
 		"/forum":    &forum.Controller{},
