@@ -10,4 +10,4 @@
 .*.un~
 
 # Test
-/tmp
+/.tmp
