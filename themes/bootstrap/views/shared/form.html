@@ -1,0 +1,54 @@
+<h3>{{.title}}</h3>
+<hr/>
+<form id="form-{{.id}}" action="{{.action}}" method="{{.method}}">
+  {{.xsrf}}
+  {{range .fields}}
+    {{if eq .type "text"}}
+      <div class="form-group">
+        <label for="{{.id}}">{{.label}}</label>
+        <input type="text" class="form-control" id="{{.id}}" name="{{.id}}" value="{{.value}}" aria-describedby="{{.id}}Help" placeholder="{{.hint}}" {{if .readonly}}readonly{{end}}>
+        <small id="{{.id}}Help" class="form-text text-muted">{{.helper}}</small>
+      </div>
+    {{else if eq .type "email"}}
+      <div class="form-group">
+        <label for="{{.id}}">{{.label}}</label>
+        <input type="email" class="form-control" id="{{.id}}" name="{{.id}}" value="{{.value}}" aria-describedby="{{.id}}Help" placeholder="{{.hint}}" {{if .readonly}}readonly{{end}}>
+        <small id="{{.id}}Help" class="form-text text-muted">{{.helper}}</small>
+      </div>
+    {{else if eq .type "password"}}
+      <div class="form-group">
+        <label for="{{.id}}">{{.label}}</label>
+        <input type="password" class="form-control" id="{{.id}}" name="{{.id}}" value="{{.value}}" aria-describedby="{{.id}}Help" placeholder="{{.hint}}">
+        <small id="{{.id}}Help" class="form-text text-muted">{{.helper}}</small>
+      </div>
+    {{else if eq .type "textarea"}}
+      <div class="form-group">
+        <label for="{{.id}}">{{.label}}</label>
+        <textarea class="form-control" id="{{.id}}" name="{{.id}}" rows="{{.rows}}" aria-describedby="{{.id}}Help" placeholder="{{.hint}}">{{.value}}</textarea>
+        <small id="{{.id}}Help" class="form-text text-muted">{{.helper}}</small>
+      </div>
+    {{else if eq .type "checkbox"}}
+      <div class="form-check">
+        <label class="form-check-label">
+          <input value="true" type="checkbox" class="form-check-input" name="{{.id}}" id="{{.id}}" {{if .checked}}checked{{end}}>
+          {{.label}}
+        </label>
+      </div>
+    {{else if eq .type "select"}}
+      <div class="form-group">
+        <label for="{{.id}}">{{.label}}</label>
+        <select class="form-control" id="{{.id}}" name="{{.id}}" aria-describedby="{{.id}}Help">
+          {{$value := .value}}
+          {{range $k, $v := .options}}
+            <option value="{{$v}}" {{if eq $value $v}}selected{{end}}>{{$k}}</option>
+          {{end}}
+        </select>
+        <small id="{{.id}}Help" class="form-text text-muted">{{.helper}}</small>
+      </div>
+    {{else}}
+      <input type="hidden" class="form-control" id="{{.id}}" name="{{.id}}" value="{{.value}}">
+    {{end}}
+  {{end}}
+  <button type="submit" class="btn btn-primary">{{t .locale "buttons.submit"}}</button>
+  <button type="reset" class="btn btn-secondary">{{t .locale "buttons.reset"}}</button>
+</form>

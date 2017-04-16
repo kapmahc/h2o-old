@@ -3,6 +3,7 @@ package base
 import (
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/astaxie/beego"
 	"github.com/beego/i18n"
@@ -36,10 +37,12 @@ func (p *Controller) setLocale() {
 	}
 
 	// 4. Default language is English.
-	if !i18n.IsExist(lang) {
-		lang = language.AmericanEnglish.String()
+	tag, err := language.Parse(lang)
+	if err != nil || !i18n.IsExist(tag.String()) {
+		tag = language.AmericanEnglish
 		write = true
 	}
+	lang = tag.String()
 
 	// Save language information in cookies.
 	if write {
@@ -49,7 +52,11 @@ func (p *Controller) setLocale() {
 	// Set language properties.
 	p.Locale = lang
 	p.Data[LOCALE] = lang
-	p.Data["languages"] = i18n.ListLangs()
+	var languages []string
+	for _, l := range i18n.ListLangs() {
+		languages = append(languages, strings.Replace(l, "-", "_", -1))
+	}
+	p.Data["languages"] = languages
 }
 
 func loadLocales(root string) error {

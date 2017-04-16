@@ -11,5 +11,7 @@ type Controller struct {
 
 // Prepare prepare
 func (p *Controller) Prepare() {
+	beego.ReadFromRequest(&p.Controller)
+	p.Layout = "application.html"
 	p.setLocale()
 }
