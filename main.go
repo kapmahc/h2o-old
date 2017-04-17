@@ -1,9 +1,13 @@
 package main
 
-import(
-  
+import (
+	"log"
+
+	"github.com/kapmahc/h2o/web"
 )
 
-func main(){
-
+func main() {
+	if err := web.Main(); err != nil {
+		log.Fatal(err)
+	}
 }
