@@ -14,11 +14,10 @@ type Plugin interface {
 	Init()
 	Mount(*gin.Engine)
 	Open(*inject.Graph) error
-	Shell() []cli.Command
+	Console() []cli.Command
 	Atom(lang string) ([]*atom.Entry, error)
 	Sitemap() ([]stm.URL, error)
 	Workers() map[string]job.Handler
-	Layout(c *gin.Context) gin.H
 }
 
 var plugins []Plugin

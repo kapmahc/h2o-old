@@ -44,7 +44,7 @@ func Main() error {
 	app.Commands = []cli.Command{}
 
 	Walk(func(p Plugin) error {
-		items := p.Shell()
+		items := p.Console()
 		app.Commands = append(app.Commands, items...)
 		return nil
 	})
