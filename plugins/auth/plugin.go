@@ -2,7 +2,6 @@ package auth
 
 import (
 	"github.com/facebookgo/inject"
-	"github.com/gin-gonic/gin"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 	"github.com/jinzhu/gorm"
 	"github.com/kapmahc/h2o/web"
@@ -21,13 +20,11 @@ type Plugin struct {
 	I18n     *i18n.I18n         `inject:""`
 	Settings *settings.Settings `inject:""`
 	Server   *job.Server        `inject:""`
+	Wrap     *web.Wrap          `inject:""`
 }
 
 // Init init config
 func (p *Plugin) Init() {}
-
-// Mount mount web points
-func (p *Plugin) Mount(*gin.Engine) {}
 
 // Open inject beans
 func (p *Plugin) Open(*inject.Graph) error {
