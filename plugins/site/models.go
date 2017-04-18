@@ -9,9 +9,9 @@ import (
 // Post post
 type Post struct {
 	web.Model
-	Name  string
-	Lang  string
-	Title string
+	Name  string `json:"name"`
+	Lang  string `json:"lang"`
+	Title string `json:"title"`
 	Body  string `json:"body"`
 	Type  string `json:"type"`
 }
@@ -49,7 +49,7 @@ func (LeaveWord) TableName() string {
 
 // Link link
 type Link struct {
-	ID    uint   `gorm:"primary_key" json:"id"`
+	web.Model
 	Lang  string `json:"lang"`
 	Loc   string `json:"loc"`
 	Href  string `json:"href"`
@@ -59,7 +59,7 @@ type Link struct {
 
 // Page  page
 type Page struct {
-	ID      uint   `gorm:"primary_key" json:"id"`
+	web.Model
 	Lang    string `json:"lang"`
 	Loc     string `json:"loc"`
 	Title   string `json:"title"`

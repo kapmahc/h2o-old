@@ -2,6 +2,14 @@ package site
 
 import "github.com/gin-gonic/gin"
 
+func (p *Plugin) showPostHTML(c *gin.Context, l string) (gin.H, error) {
+	var item []Post
+	err := p.Db.
+		Where("lang = ? AND name = ?", l, c.Param("name")).
+		First(&item).Error
+	return gin.H{"post": item}, err
+}
+
 func (p *Plugin) indexNoticesHTML(c *gin.Context, l string) (gin.H, error) {
 	var items []Notice
 	err := p.Db.

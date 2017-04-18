@@ -4,7 +4,10 @@ import "github.com/gin-gonic/gin"
 
 // Mount mount web points
 func (p *Plugin) Mount(rt *gin.Engine) {
-	rt.GET("/notices.html", p.Wrap.HTML("site/notices/index", p.indexNoticesHTML))
+	hg := rt.Group("/htdocs")
+	hg.GET("/posts/:name", p.Wrap.HTML("site/posts/show", p.showPostHTML))
+	hg.GET("/notices", p.Wrap.HTML("site/notices/index", p.indexNoticesHTML))
+
 	rt.GET("/locales/:lang", p.Wrap.JSON(p.getLocales))
 	rt.GET("/site/info", p.Wrap.JSON(p.getSiteInfo))
 
@@ -41,5 +44,10 @@ func (p *Plugin) Mount(rt *gin.Engine) {
 	ag.POST("/pages", p.Jwt.MustAdminMiddleware, p.Wrap.FORM(&fmPage{}, p.createPage))
 	ag.POST("/pages/:id", p.Jwt.MustAdminMiddleware, p.Wrap.FORM(&fmPage{}, p.updatePage))
 	ag.DELETE("/pages/:id", p.Jwt.MustAdminMiddleware, p.Wrap.JSON(p.destroyPage))
+
+	ag.GET("/posts", p.Jwt.MustAdminMiddleware, p.Wrap.JSON(p.indexPosts))
+	ag.POST("/posts", p.Jwt.MustAdminMiddleware, p.Wrap.FORM(&fmPost{}, p.createPost))
+	ag.POST("/posts/:id", p.Jwt.MustAdminMiddleware, p.Wrap.FORM(&fmPost{}, p.updatePost))
+	ag.DELETE("/posts/:id", p.Jwt.MustAdminMiddleware, p.Wrap.JSON(p.destroyPost))
 
 }
