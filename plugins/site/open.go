@@ -21,6 +21,7 @@ import (
 	i_orm "github.com/kapmahc/h2o/web/i18n/orm"
 	"github.com/kapmahc/h2o/web/job/rabbitmq"
 	s_orm "github.com/kapmahc/h2o/web/settings/orm"
+	"github.com/kapmahc/h2o/web/uploader/fs"
 	"github.com/spf13/viper"
 	"github.com/unrolled/render"
 	"golang.org/x/text/language"
@@ -40,11 +41,20 @@ func (p *Plugin) Open(g *inject.Graph) error {
 	// -------------------
 	var tags []language.Tag
 	for _, l := range viper.GetStringSlice("languages") {
-		if lng, err := language.Parse(l); err == nil {
-			tags = append(tags, lng)
-		} else {
-			return err
+		lng, er := language.Parse(l)
+		if er != nil {
+			return er
 		}
+		tags = append(tags, lng)
+	}
+	// -------------------
+	theme := viper.GetString("server.theme")
+	up, err := fs.NewFileSystemStore(
+		path.Join("themes", theme, "fiels"),
+		viper.GetString("server.backend")+"/fiels",
+	)
+	if err != nil {
+		return err
 	}
 	// -------------------
 	return g.Provide(
@@ -57,7 +67,8 @@ func (p *Plugin) Open(g *inject.Graph) error {
 		&inject.Object{Value: cip},
 		&inject.Object{Value: db},
 		&inject.Object{Value: p.openRedis()},
-		&inject.Object{Value: p.openRender(viper.GetString("server.theme"))},
+		&inject.Object{Value: p.openRender(theme)},
+		&inject.Object{Value: up},
 
 		&inject.Object{Value: i_orm.New(db)},
 		&inject.Object{Value: s_orm.New(db)},

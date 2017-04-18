@@ -21,4 +21,11 @@ func (p *Plugin) Mount(rt *gin.Engine) {
 	mug.POST("/info", p.Wrap.FORM(&fmInfo{}, p.postUsersInfo))
 	mug.POST("/change-password", p.Wrap.FORM(&fmChangePassword{}, p.postUsersChangePassword))
 	mug.DELETE("/sign-out", p.Wrap.JSON(p.deleteUsersSignOut))
+
+	ag := rt.Group("/attachments")
+	ag.GET("/", p.Jwt.MustSignInMiddleware, p.Wrap.JSON(p.indexAttachments))
+	ag.POST("/", p.Jwt.MustSignInMiddleware, p.Wrap.FORM(&fmAttachmentNew{}, p.createAttachment))
+	ag.GET("/:id", p.Wrap.JSON(p.showAttachment))
+	ag.POST("/:id", p.Jwt.MustSignInMiddleware, p.canEditAttachment, p.Wrap.FORM(&fmAttachmentEdit{}, p.updateAttachment))
+	ag.DELETE("/:id", p.Jwt.MustSignInMiddleware, p.canEditAttachment, p.Wrap.JSON(p.destroyAttachment))
 }

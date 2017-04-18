@@ -86,11 +86,11 @@ type Attachment struct {
 	URL          string `json:"url"`
 	Length       int64  `json:"length"`
 	MediaType    string `json:"mediaType"`
-	ResourceID   uint
-	ResourceType string
+	ResourceID   uint   `json:"resourceId"`
+	ResourceType string `json:"resourceType"`
 
-	UserID uint
-	User   User
+	UserID uint `json:"userId"`
+	User   User `json:"-"`
 }
 
 // TableName table name

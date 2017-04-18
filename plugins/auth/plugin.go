@@ -9,6 +9,7 @@ import (
 	"github.com/kapmahc/h2o/web/job"
 	"github.com/kapmahc/h2o/web/security"
 	"github.com/kapmahc/h2o/web/settings"
+	"github.com/kapmahc/h2o/web/uploader"
 	"github.com/urfave/cli"
 	"golang.org/x/tools/blog/atom"
 )
@@ -23,6 +24,7 @@ type Plugin struct {
 	Server   *job.Server        `inject:""`
 	Wrap     *web.Wrap          `inject:""`
 	Hmac     *security.Hmac     `inject:""`
+	Uploader uploader.Store     `inject:""`
 }
 
 // Init init config

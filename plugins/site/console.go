@@ -600,7 +600,8 @@ func (p *Plugin) runServer(*cli.Context, *inject.Graph) error {
 	theme := viper.GetString("server.theme")
 	if !web.IsProduction() {
 		// using nginx for production
-		rt.Static("/assets", path.Join("themes", theme, "assets"))
+		rt.Static("/assets", path.Join("themes", theme, "public", "assets"))
+		rt.Static("/files", path.Join("themes", theme, "public", "files"))
 	}
 	// ---------
 	cfg := cors.DefaultConfig()
