@@ -5,7 +5,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 	"github.com/jinzhu/gorm"
+	"github.com/kapmahc/h2o/plugins/auth"
 	"github.com/kapmahc/h2o/web"
+	"github.com/kapmahc/h2o/web/i18n"
 	"github.com/kapmahc/h2o/web/job"
 	"github.com/urfave/cli"
 	"golang.org/x/tools/blog/atom"
@@ -13,7 +15,10 @@ import (
 
 // Plugin plugin
 type Plugin struct {
-	Db *gorm.DB `inject:""`
+	Db   *gorm.DB   `inject:""`
+	Wrap *web.Wrap  `inject:""`
+	Jwt  *auth.Jwt  `inject:""`
+	I18n *i18n.I18n `inject:""`
 }
 
 // Init init config

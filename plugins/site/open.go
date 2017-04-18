@@ -50,8 +50,8 @@ func (p *Plugin) Open(g *inject.Graph) error {
 	// -------------------
 	theme := viper.GetString("server.theme")
 	up, err := fs.NewFileSystemStore(
-		path.Join("themes", theme, "fiels"),
-		web.Backend()+"/fiels",
+		path.Join("themes", theme, "public", "files"),
+		web.Backend()+"/files",
 	)
 	if err != nil {
 		return err

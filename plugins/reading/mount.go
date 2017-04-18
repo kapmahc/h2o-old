@@ -16,8 +16,8 @@ func (p *Plugin) Mount(rt *gin.Engine) {
 
 	rg.GET("/notes", p.Jwt.MustSignInMiddleware, p.Wrap.JSON(p.indexNotes))
 	rg.POST("/notes", p.Jwt.MustSignInMiddleware, p.Wrap.FORM(&fmNoteNew{}, p.createNote))
-	rg.POST("/notes/:id", p.Jwt.MustSignInMiddleware, p.Wrap.FORM(&fmNoteEdit{}, p.updateNote))
-	rg.DELETE("/notes/:id", p.Jwt.MustSignInMiddleware, p.Wrap.JSON(p.destroyNote))
+	rg.POST("/notes/:id", p.Jwt.MustSignInMiddleware, p.canEditNote, p.Wrap.FORM(&fmNoteEdit{}, p.updateNote))
+	rg.DELETE("/notes/:id", p.Jwt.MustSignInMiddleware, p.canEditNote, p.Wrap.JSON(p.destroyNote))
 
 	ag := rt.Group("/reading", p.Jwt.MustAdminMiddleware)
 	ag.GET("/status", p.Wrap.JSON(p.getStatus))
