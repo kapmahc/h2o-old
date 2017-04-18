@@ -14,13 +14,25 @@ type Wrap struct {
 	Render *render.Render `inject:""`
 }
 
+// Redirect wrap redirect
+func (p *Wrap) Redirect(f func(*gin.Context, string) (string, error)) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if u, e := f(c, c.MustGet(i18n.LOCALE).(string)); e == nil {
+			c.Redirect(http.StatusFound, u)
+		} else {
+			log.Error(e)
+			c.String(http.StatusInternalServerError, e.Error())
+		}
+	}
+}
+
 // FORM wrap form handler
-func (p *Wrap) FORM(fm interface{}, fn func(*gin.Context, interface{}) (interface{}, error)) gin.HandlerFunc {
-	return p.JSON(func(c *gin.Context) (interface{}, error) {
+func (p *Wrap) FORM(fm interface{}, fn func(*gin.Context, string, interface{}) (interface{}, error)) gin.HandlerFunc {
+	return p.JSON(func(c *gin.Context, l string) (interface{}, error) {
 		if err := c.Bind(fm); err != nil {
 			return nil, err
 		}
-		return fn(c, fm)
+		return fn(c, l, fm)
 	})
 }
 
@@ -39,9 +51,9 @@ func (p *Wrap) HTML(t string, f func(*gin.Context, string) (gin.H, error)) gin.H
 }
 
 // XML wrap xml render
-func (p *Wrap) XML(f func(*gin.Context) (interface{}, error)) gin.HandlerFunc {
+func (p *Wrap) XML(f func(*gin.Context, string) (interface{}, error)) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if v, e := f(c); e == nil {
+		if v, e := f(c, c.MustGet(i18n.LOCALE).(string)); e == nil {
 			c.XML(http.StatusOK, v)
 		} else {
 			log.Error(e)
@@ -51,9 +63,9 @@ func (p *Wrap) XML(f func(*gin.Context) (interface{}, error)) gin.HandlerFunc {
 }
 
 // JSON wrap json render
-func (p *Wrap) JSON(f func(*gin.Context) (interface{}, error)) gin.HandlerFunc {
+func (p *Wrap) JSON(f func(*gin.Context, string) (interface{}, error)) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if v, e := f(c); e == nil {
+		if v, e := f(c, c.MustGet(i18n.LOCALE).(string)); e == nil {
 			c.JSON(http.StatusOK, v)
 		} else {
 			log.Error(e)

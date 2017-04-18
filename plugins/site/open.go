@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/SermoDigital/jose/crypto"
+	log "github.com/Sirupsen/logrus"
 	"github.com/facebookgo/inject"
 	_redis "github.com/garyburd/redigo/redis"
 	"github.com/gin-gonic/gin"
@@ -169,6 +170,26 @@ func (p *Plugin) openRender(theme string) *render.Render {
 		},
 		"starts": func(s string, b string) bool {
 			return strings.HasPrefix(s, b)
+		},
+		"links": func(lang, loc string) []Link {
+			var items []Link
+			if err := p.Db.
+				Where("lang = ? AND loc = ?", lang, loc).
+				Order("sort DESC").
+				Find(&items).Error; err != nil {
+				log.Error(err)
+			}
+			return items
+		},
+		"pages": func(lang, loc string) []Page {
+			var items []Page
+			if err := p.Db.
+				Where("lang = ? AND loc = ?", lang, loc).
+				Order("sort DESC").
+				Find(&items).Error; err != nil {
+				log.Error(err)
+			}
+			return items
 		},
 	}
 	return render.New(render.Options{

@@ -49,6 +49,7 @@ func (LeaveWord) TableName() string {
 // Link link
 type Link struct {
 	ID    uint   `gorm:"primary_key" json:"id"`
+	Lang  string `json:"lang"`
 	Loc   string `json:"loc"`
 	Href  string `json:"href"`
 	Label string `json:"label"`
@@ -58,6 +59,7 @@ type Link struct {
 // Page  page
 type Page struct {
 	ID      uint   `gorm:"primary_key" json:"id"`
+	Lang    string `json:"lang"`
 	Loc     string `json:"loc"`
 	Title   string `json:"title"`
 	Summary string `json:"summary"`
