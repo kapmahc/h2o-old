@@ -9,7 +9,6 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/kapmahc/h2o/web"
 	"github.com/kapmahc/h2o/web/job"
-	"github.com/spf13/viper"
 	gomail "gopkg.in/gomail.v2"
 )
 
@@ -49,8 +48,8 @@ func (p *Plugin) sendEmail(lng string, user *User, act string) {
 		Frontend string
 		Token    string
 	}{
-		Backend:  viper.GetString("server.backend"),
-		Frontend: viper.GetString("server.frontend"),
+		Backend:  web.Backend(),
+		Frontend: web.Frontend(),
 		Token:    string(tkn),
 	}
 	subject, err := p.I18n.F(lng, fmt.Sprintf("auth.emails.%s.subject", act), obj)

@@ -608,7 +608,7 @@ func (p *Plugin) runServer(*cli.Context, *inject.Graph) error {
 	cfg.AllowMethods = append(cfg.AllowMethods, http.MethodDelete, http.MethodPatch)
 	cfg.AllowCredentials = true
 	cfg.AllowHeaders = append(cfg.AllowHeaders, "Authorization")
-	cfg.AllowOrigins = []string{viper.GetString("server.frontend")}
+	cfg.AllowOrigins = []string{web.Frontend()}
 	rt.Use(
 		cors.New(cfg),
 		p.I18n.Middleware,
@@ -660,7 +660,7 @@ func (p *Plugin) runServer(*cli.Context, *inject.Graph) error {
 
 func (p *Plugin) writeSitemap(root string) error {
 	sm := stm.NewSitemap()
-	sm.SetDefaultHost(viper.GetString("server.backend"))
+	sm.SetDefaultHost(web.Backend())
 	sm.SetPublicPath(root)
 	sm.SetCompress(true)
 	sm.SetSitemapsPath("/")
@@ -699,7 +699,7 @@ func (p *Plugin) writeRssAtom(root string, lang string) error {
 		},
 		Entry: make([]*atom.Entry, 0),
 	}
-	home := viper.GetString("server.backend")
+	home := web.Backend()
 	if err := web.Walk(func(en web.Plugin) error {
 		items, err := en.Atom(lang)
 		if err != nil {
@@ -741,7 +741,7 @@ func (p *Plugin) writeRobotsTxt(root string) error {
 	defer fd.Close()
 	return t.Execute(fd, struct {
 		Home string
-	}{Home: viper.GetString("server.backend")})
+	}{Home: web.Backend()})
 }
 
 func (p *Plugin) writeGoogleVerify(root string) error {

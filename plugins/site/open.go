@@ -51,7 +51,7 @@ func (p *Plugin) Open(g *inject.Graph) error {
 	theme := viper.GetString("server.theme")
 	up, err := fs.NewFileSystemStore(
 		path.Join("themes", theme, "fiels"),
-		viper.GetString("server.backend")+"/fiels",
+		web.Backend()+"/fiels",
 	)
 	if err != nil {
 		return err
