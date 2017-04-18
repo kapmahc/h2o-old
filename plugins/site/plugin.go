@@ -1,7 +1,6 @@
 package site
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 	"github.com/jinzhu/gorm"
 	"github.com/kapmahc/h2o/plugins/auth"
@@ -24,13 +23,12 @@ type Plugin struct {
 	Settings *settings.Settings `inject:""`
 	Server   *job.Server        `inject:""`
 	Cache    *cache.Cache       `inject:""`
+	Wrap     *web.Wrap          `inject:""`
+	Matcher  language.Matcher   `inject:""`
 }
 
 // Init init config
 func (p *Plugin) Init() {}
-
-// Mount mount web points
-func (p *Plugin) Mount(*gin.Engine) {}
 
 // Atom rss.atom
 func (p *Plugin) Atom(lang string) ([]*atom.Entry, error) {

@@ -4,7 +4,7 @@ import "github.com/gin-gonic/gin"
 
 // Mount mount web points
 func (p *Plugin) Mount(rt *gin.Engine) {
-	rt.GET("/users.html", p.Wrap.HTML("auth/users/index", p.indexUsers))
+	rt.GET("/users.html", p.Wrap.HTML("auth/users/index", p.indexUsersHTML))
 
 	nug := rt.Group("/users")
 	nug.POST("/sign-up", p.Wrap.FORM(&fmSignUp{}, p.postUsersSignUp))

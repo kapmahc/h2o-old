@@ -24,6 +24,7 @@ func (Post) TableName() string {
 // Notice notice
 type Notice struct {
 	web.Model
+	Lang string `json:"lang"`
 	Body string `json:"body"`
 	Type string `json:"type"`
 }
