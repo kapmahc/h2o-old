@@ -16,7 +16,7 @@ type Plugin interface {
 	Open(*inject.Graph) error
 	Console() []cli.Command
 	Atom(lang string) ([]*atom.Entry, error)
-	Sitemap() ([]stm.URL, error)
+	Sitemap(languages ...string) ([]stm.URL, error)
 	Workers() map[string]job.Handler
 }
 

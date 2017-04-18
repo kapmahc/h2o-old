@@ -1,8 +1,6 @@
 package i18n
 
 import (
-	"math"
-
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/language"
 )
@@ -14,7 +12,6 @@ const (
 
 // Middleware locale-middleware
 func (p *I18n) Middleware(c *gin.Context) {
-	write := false
 	// 1. Check URL arguments.
 	lang := c.Request.URL.Query().Get(LOCALE)
 
@@ -23,8 +20,6 @@ func (p *I18n) Middleware(c *gin.Context) {
 		if ck, er := c.Request.Cookie(LOCALE); er == nil {
 			lang = ck.Value
 		}
-	} else {
-		write = true
 	}
 
 	// 3. Get language information from 'Accept-Language'.
@@ -36,13 +31,5 @@ func (p *I18n) Middleware(c *gin.Context) {
 	}
 
 	tag, _, _ := p.Matcher.Match(language.Make(lang))
-	ts := tag.String()
-	if ts != lang {
-		write = true
-	}
-	if write {
-		c.SetCookie(LOCALE, ts, math.MaxInt32, "/", "", false, false)
-	}
-
-	c.Set(LOCALE, ts)
+	c.Set(LOCALE, tag.String())
 }

@@ -2,6 +2,10 @@ package site
 
 import "github.com/gin-gonic/gin"
 
+func (p *Plugin) getHomeHTML(c *gin.Context, l string) (gin.H, error) {
+	return gin.H{}, nil
+}
+
 func (p *Plugin) showPostHTML(c *gin.Context, l string) (gin.H, error) {
 	var item []Post
 	err := p.Db.
@@ -9,6 +13,17 @@ func (p *Plugin) showPostHTML(c *gin.Context, l string) (gin.H, error) {
 		First(&item).Error
 	return gin.H{"post": item}, err
 }
+
+func (p *Plugin) indexPostsHTML(c *gin.Context, l string) (gin.H, error) {
+	var items []Post
+	err := p.Db.
+		Where("lang = ?", l).
+		Order("updated_at DESC").
+		Find(&items).Error
+	return gin.H{"posts": items}, err
+}
+
+// -----------------------
 
 func (p *Plugin) indexNoticesHTML(c *gin.Context, l string) (gin.H, error) {
 	var items []Notice

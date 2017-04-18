@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"fmt"
+
 	"github.com/facebookgo/inject"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 	"github.com/jinzhu/gorm"
@@ -46,8 +48,12 @@ func (p *Plugin) Atom(lang string) ([]*atom.Entry, error) {
 }
 
 // Sitemap sitemap.xml.gz
-func (p *Plugin) Sitemap() ([]stm.URL, error) {
-	return []stm.URL{}, nil
+func (p *Plugin) Sitemap(languages ...string) ([]stm.URL, error) {
+	var items []stm.URL
+	for _, l := range languages {
+		items = append(items, stm.URL{"loc": fmt.Sprintf("htdocs/%s/users", l)})
+	}
+	return items, nil
 }
 
 func init() {

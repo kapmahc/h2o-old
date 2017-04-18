@@ -1,6 +1,8 @@
 package site
 
 import (
+	"fmt"
+
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 	"github.com/jinzhu/gorm"
 	"github.com/kapmahc/h2o/plugins/auth"
@@ -36,8 +38,35 @@ func (p *Plugin) Atom(lang string) ([]*atom.Entry, error) {
 }
 
 // Sitemap sitemap.xml.gz
-func (p *Plugin) Sitemap() ([]stm.URL, error) {
-	return []stm.URL{}, nil
+func (p *Plugin) Sitemap(languages ...string) ([]stm.URL, error) {
+	var items []stm.URL
+	for _, l := range languages {
+		items = append(
+			items,
+			stm.URL{"loc": fmt.Sprintf("htdocs/%s/", l)},
+			stm.URL{"loc": fmt.Sprintf("htdocs/%s/notices", l)},
+			stm.URL{"loc": fmt.Sprintf("htdocs/%s/posts", l)},
+		)
+	}
+
+	var posts []Post
+	if err := p.Db.
+		Select([]string{"name", "lang", "updated_at"}).
+		Order("updated DESC").
+		Find(&posts).Error; err != nil {
+		return nil, err
+	}
+	for _, it := range posts {
+		items = append(
+			items,
+			stm.URL{
+				"loc":     fmt.Sprintf("htdocs/%s/posts/%s", it.Lang, it.Name),
+				"lastmod": it.UpdatedAt,
+			},
+		)
+	}
+
+	return items, nil
 }
 
 // Workers job handler

@@ -39,7 +39,7 @@ func (p *Wrap) FORM(fm interface{}, fn func(*gin.Context, string, interface{}) (
 // HTML wrap html render
 func (p *Wrap) HTML(t string, f func(*gin.Context, string) (gin.H, error)) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		lang := c.MustGet(i18n.LOCALE).(string)
+		lang := c.Param("lang")
 		if v, e := f(c, lang); e == nil {
 			v["lang"] = lang
 			p.Render.HTML(c.Writer, http.StatusOK, t, v)

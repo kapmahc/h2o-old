@@ -4,8 +4,10 @@ import "github.com/gin-gonic/gin"
 
 // Mount mount web points
 func (p *Plugin) Mount(rt *gin.Engine) {
-	hg := rt.Group("/htdocs")
+	hg := rt.Group("/htdocs/:lang")
+	hg.GET("/", p.Wrap.HTML("site/home", p.getHomeHTML))
 	hg.GET("/posts/:name", p.Wrap.HTML("site/posts/show", p.showPostHTML))
+	hg.GET("/posts", p.Wrap.HTML("site/posts/index", p.indexPostsHTML))
 	hg.GET("/notices", p.Wrap.HTML("site/notices/index", p.indexNoticesHTML))
 
 	rt.GET("/locales/:lang", p.Wrap.JSON(p.getLocales))

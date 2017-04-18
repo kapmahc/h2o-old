@@ -38,7 +38,7 @@ func (p *Plugin) Atom(lang string) ([]*atom.Entry, error) {
 }
 
 // Sitemap sitemap.xml.gz
-func (p *Plugin) Sitemap() ([]stm.URL, error) {
+func (p *Plugin) Sitemap(languages ...string) ([]stm.URL, error) {
 	return []stm.URL{}, nil
 }
 

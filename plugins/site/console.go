@@ -667,7 +667,8 @@ func (p *Plugin) writeSitemap(root string) error {
 	sm.Create()
 
 	if err := web.Walk(func(en web.Plugin) error {
-		urls, err := en.Sitemap()
+		languages := viper.GetStringSlice("languages")
+		urls, err := en.Sitemap(languages...)
 		if err != nil {
 			return err
 		}
