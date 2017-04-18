@@ -6,6 +6,16 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Backend backend home
+func Backend() string {
+	return viper.GetString("server.backend")
+}
+
+// Frontend frontend home
+func Frontend() string {
+	return viper.GetString("server.frontend")
+}
+
 // IsProduction production mode ?
 func IsProduction() bool {
 	return viper.GetString("env") == "production"
