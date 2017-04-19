@@ -12,6 +12,7 @@ import (
 	"github.com/kapmahc/h2o/web/job"
 	"github.com/kapmahc/h2o/web/settings"
 	"github.com/spf13/viper"
+	"github.com/unrolled/render"
 	"golang.org/x/text/language"
 	"golang.org/x/tools/blog/atom"
 )
@@ -27,6 +28,7 @@ type Plugin struct {
 	Cache    *cache.Cache       `inject:""`
 	Wrap     *web.Wrap          `inject:""`
 	Matcher  language.Matcher   `inject:""`
+	Render   *render.Render     `inject:""`
 }
 
 // Init init config
