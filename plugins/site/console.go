@@ -297,7 +297,7 @@ func (p *Plugin) generateNginxConf(*cli.Context) error {
 		return err
 	}
 
-	name := viper.GetString("server.name")
+	name := web.Name()
 	fn := path.Join("etc", "nginx", "sites-enabled", name+".conf")
 	if err = os.MkdirAll(path.Dir(fn), 0700); err != nil {
 		return err
@@ -591,7 +591,7 @@ func (p *Plugin) runServer(*cli.Context, *inject.Graph) error {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	rt := gin.Default()
-	rt.LoadHTMLGlob("templates/*")
+	rt.LoadHTMLGlob("templates/*.html")
 	// --------------
 	theme := viper.GetString("server.theme")
 	if !web.IsProduction() {

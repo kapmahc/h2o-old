@@ -38,7 +38,7 @@ func Config(f cli.ActionFunc) cli.ActionFunc {
 		if IsProduction() {
 			// ----------
 			log.SetLevel(log.InfoLevel)
-			if wrt, err := syslog.New(syslog.LOG_INFO, viper.GetString("server.name")); err == nil {
+			if wrt, err := syslog.New(syslog.LOG_INFO, Name()); err == nil {
 				log.AddHook(&logrus_syslog.SyslogHook{Writer: wrt})
 			} else {
 				log.Error(err)

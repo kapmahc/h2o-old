@@ -60,7 +60,6 @@ func (p *Plugin) Open(g *inject.Graph) error {
 	return g.Provide(
 		&inject.Object{Value: []byte(viper.GetString("secrets.hmac")), Name: "hmac.key"},
 		&inject.Object{Value: []byte(viper.GetString("secrets.jwt")), Name: "jwt.key"},
-		&inject.Object{Value: viper.GetString("server.name"), Name: "namespace"},
 		&inject.Object{Value: crypto.SigningMethodHS512, Name: "jwt.method"},
 
 		&inject.Object{Value: language.NewMatcher(tags)},
@@ -74,7 +73,7 @@ func (p *Plugin) Open(g *inject.Graph) error {
 		&inject.Object{Value: s_orm.New(db)},
 		&inject.Object{Value: &redis.Store{}},
 		&inject.Object{Value: rabbitmq.New(
-			viper.GetString("server.name"),
+			web.Name(),
 			viper.GetString("rabbitmq.host"),
 			viper.GetInt("rabbitmq.port"),
 			viper.GetString("rabbitmq.user"),

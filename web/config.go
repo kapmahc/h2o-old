@@ -6,13 +6,31 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Name get server.name
+func Name() string {
+	return viper.GetString("server.name")
+}
+
+func home() string {
+	if viper.GetBool("server.ssl") {
+		return "https://" + Name()
+	}
+	return "http://" + Name()
+}
+
 // Backend backend home
 func Backend() string {
+	if IsProduction() {
+		return home()
+	}
 	return viper.GetString("server.backend")
 }
 
 // Frontend frontend home
 func Frontend() string {
+	if IsProduction() {
+		return home() + "/dashboard"
+	}
 	return viper.GetString("server.frontend")
 }
 
