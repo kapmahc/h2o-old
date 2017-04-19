@@ -1,8 +1,8 @@
 package vpn
 
 import (
+	"github.com/SermoDigital/jose/crypto"
 	"github.com/facebookgo/inject"
-	"github.com/gin-gonic/gin"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 	"github.com/jinzhu/gorm"
 	"github.com/kapmahc/h2o/plugins/auth"
@@ -15,17 +15,16 @@ import (
 
 // Plugin plugin
 type Plugin struct {
-	Db   *gorm.DB   `inject:""`
-	Wrap *web.Wrap  `inject:""`
-	Jwt  *auth.Jwt  `inject:""`
-	I18n *i18n.I18n `inject:""`
+	Db     *gorm.DB             `inject:""`
+	Wrap   *web.Wrap            `inject:""`
+	Jwt    *auth.Jwt            `inject:""`
+	I18n   *i18n.I18n           `inject:""`
+	Key    []byte               `inject:"jwt.key"`
+	Method crypto.SigningMethod `inject:"jwt.method"`
 }
 
 // Init init config
 func (p *Plugin) Init() {}
-
-// Mount mount web points
-func (p *Plugin) Mount(*gin.Engine) {}
 
 // Open inject beans
 func (p *Plugin) Open(*inject.Graph) error {

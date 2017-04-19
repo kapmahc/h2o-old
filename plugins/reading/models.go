@@ -31,12 +31,12 @@ func (Book) TableName() string {
 // Note note
 type Note struct {
 	web.Model
-	Type   string
-	Body   string
-	UserID uint
-	User   auth.User
-	BookID uint
-	Book   Book
+	Type   string    `json:"type"`
+	Body   string    `json:"body"`
+	UserID uint      `json:"userId"`
+	User   auth.User `json:"-"`
+	BookID uint      `json:"bookId"`
+	Book   Book      `json:"book"`
 }
 
 // TableName table name

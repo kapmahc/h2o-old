@@ -596,6 +596,7 @@ func (p *Plugin) runServer(*cli.Context, *inject.Graph) error {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	rt := gin.Default()
+	rt.LoadHTMLGlob("templates/*")
 	// --------------
 	theme := viper.GetString("server.theme")
 	if !web.IsProduction() {
