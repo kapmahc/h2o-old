@@ -6,7 +6,14 @@ export class SignIn extends Component {
     return (<div>
       sign in
       <br/>
-      <Link to="/users/sign-up">Sign up</Link>
+      <ul>
+      <li>
+        <Link to="/users/sign-in">Sign in</Link>
+      </li>
+      <li>
+        <Link to="/users/sign-up">Sign up</Link>
+      </li>
+      </ul>
     </div>)
   }
 }
@@ -15,6 +22,15 @@ export class SignUp extends Component {
   render() {
     return (<div>
       sign up
+      <br/>
+      <ul>
+      <li>
+        <Link to="/users/sign-in">Sign in</Link>
+      </li>
+      <li>
+        <Link to="/users/sign-up">Sign up</Link>
+      </li>
+      </ul>
     </div>)
   }
 }
