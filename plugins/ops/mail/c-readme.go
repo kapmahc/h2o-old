@@ -1,12 +1,11 @@
 package mail
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/kapmahc/h2o/web"
 )
 
 func (p *Plugin) getReadme(c *gin.Context) {
 	data := gin.H{}
-	c.String(http.StatusOK, "ops-mail-readme", data)
+	web.Template(c.Writer, "Postfix-Dovecot-PostgreSQL.md", data)
 }

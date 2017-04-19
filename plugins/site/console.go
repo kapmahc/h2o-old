@@ -5,7 +5,6 @@ import (
 	"crypto/x509/pkix"
 	"encoding/xml"
 	"fmt"
-	"html/template"
 	"net/http"
 	"os"
 	"os/signal"
@@ -293,10 +292,6 @@ func (p *Plugin) generateConfig(c *cli.Context) error {
 }
 
 func (p *Plugin) generateNginxConf(*cli.Context) error {
-	t, err := template.New("").Parse(nginxConf)
-	if err != nil {
-		return err
-	}
 	pwd, err := os.Getwd()
 	if err != nil {
 		return err
@@ -314,7 +309,7 @@ func (p *Plugin) generateNginxConf(*cli.Context) error {
 	}
 	defer fd.Close()
 
-	return t.Execute(fd, struct {
+	return web.Template(fd, "nginx.conf", struct {
 		Name    string
 		Port    int
 		Root    string
@@ -729,10 +724,7 @@ func (p *Plugin) writeRssAtom(root string, lang string) error {
 }
 
 func (p *Plugin) writeRobotsTxt(root string) error {
-	t, err := template.New("").Parse(robotsTxt)
-	if err != nil {
-		return err
-	}
+
 	fn := path.Join(root, "robots.txt")
 	log.Infof("generate file %s", fn)
 	fd, err := os.OpenFile(fn, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
@@ -740,7 +732,8 @@ func (p *Plugin) writeRobotsTxt(root string) error {
 		return err
 	}
 	defer fd.Close()
-	return t.Execute(fd, struct {
+
+	return web.Template(fd, "robots.txt", struct {
 		Home string
 	}{Home: web.Backend()})
 }

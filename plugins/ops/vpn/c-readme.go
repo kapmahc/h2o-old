@@ -23,5 +23,6 @@ func (p *Plugin) getReadme(c *gin.Context) {
 		return
 	}
 	data["token"] = string(token)
-	c.HTML(http.StatusOK, "ops-vpn-readme", data)
+
+	web.Template(c.Writer, "OpenVPN.md", data)
 }
