@@ -3,6 +3,7 @@ package vpn
 import (
 	"net/http"
 
+	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
 	"github.com/kapmahc/h2o/plugins/auth"
 	"github.com/kapmahc/h2o/web"
@@ -23,5 +24,7 @@ func (p *Plugin) getReadme(c *gin.Context) {
 	}
 	data["token"] = string(token)
 
-	web.Template(c.Writer, "OpenVPN.md", data)
+	if err := web.Template(c.Writer, "OpenVPN.md", data); err != nil {
+		log.Error(err)
+	}
 }

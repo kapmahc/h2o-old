@@ -45,7 +45,7 @@ func (p *Plugin) Console() []cli.Command {
 			Name:  "seo",
 			Usage: "generate sitemap.xml.gz/rss.atom/robots.txt ...etc",
 			Action: web.Inject(func(*cli.Context, *inject.Graph) error {
-				root := path.Join("themes", viper.GetString("server.theme"), "public")
+				root := "public"
 				os.MkdirAll(root, 0755)
 				if err := p.writeSitemap(root); err != nil {
 					return err
@@ -596,8 +596,8 @@ func (p *Plugin) runServer(*cli.Context, *inject.Graph) error {
 	theme := viper.GetString("server.theme")
 	if !web.IsProduction() {
 		// using nginx for production
-		rt.Static("/assets", path.Join("themes", theme, "public", "assets"))
-		rt.Static("/files", path.Join("themes", theme, "public", "files"))
+		rt.Static("/assets", path.Join("themes", theme, "assets"))
+		rt.Static("/files", path.Join("public", "files"))
 	}
 	// ---------
 	cfg := cors.DefaultConfig()

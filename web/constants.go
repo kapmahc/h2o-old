@@ -13,7 +13,7 @@ const (
 
 // Template parse template
 func Template(w io.Writer, n string, d interface{}) error {
-	t, e := template.New("").ParseFiles(path.Join("templates", n))
+	t, e := template.ParseFiles(path.Join("templates", n))
 	if e != nil {
 		return e
 	}
