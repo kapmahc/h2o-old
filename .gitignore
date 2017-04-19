@@ -2,7 +2,7 @@
 /vendor/*/
 
 # Build
-/dist
+/build
 /dist.tar.bz2
 
 # Editor
