@@ -11,17 +11,18 @@ func Name() string {
 	return viper.GetString("server.name")
 }
 
-func home() string {
+func home(pre string) string {
+	name := pre + "." + Name()
 	if viper.GetBool("server.ssl") {
-		return "https://" + Name()
+		return "https://" + name
 	}
-	return "http://" + Name()
+	return "http://" + name
 }
 
 // Backend backend home
 func Backend() string {
 	if IsProduction() {
-		return home()
+		return home("www")
 	}
 	return viper.GetString("server.backend")
 }
@@ -29,7 +30,7 @@ func Backend() string {
 // Frontend frontend home
 func Frontend() string {
 	if IsProduction() {
-		return home() + "/dashboard"
+		return home("my")
 	}
 	return viper.GetString("server.frontend")
 }

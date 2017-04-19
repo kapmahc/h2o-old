@@ -111,8 +111,8 @@ func init() {
 		"backend":  "http://localhost:8080",
 		"frontend": "http://localhost:3000",
 		"port":     8080,
-		"ssl":      false,
-		"name":     "www.change-me.com",
+		"ssl":      true,
+		"name":     "change-me.com",
 		"theme":    "bootstrap",
 	})
 

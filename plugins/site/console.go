@@ -310,17 +310,21 @@ func (p *Plugin) generateNginxConf(*cli.Context) error {
 	defer fd.Close()
 
 	return web.Template(fd, "nginx.conf", struct {
-		Name    string
-		Port    int
-		Root    string
-		Version string
-		Ssl     bool
+		Frontend string
+		Backend  string
+		Port     int
+		Root     string
+		Theme    string
+		Version  string
+		Ssl      bool
 	}{
-		Name:    name,
-		Port:    viper.GetInt("server.port"),
-		Root:    path.Join(pwd, "themes", viper.GetString("server.theme"), "public"),
-		Version: "v1",
-		Ssl:     viper.GetBool("server.ssl"),
+		Frontend: "my." + name,
+		Backend:  "www." + name,
+		Port:     viper.GetInt("server.port"),
+		Root:     pwd,
+		Theme:    viper.GetString("server.theme"),
+		Version:  "v1",
+		Ssl:      viper.GetBool("server.ssl"),
 	})
 }
 
