@@ -1,17 +1,28 @@
-package vpn
+package mail
 
-import (
-	"time"
-
-	"github.com/gin-gonic/gin"
-	"github.com/kapmahc/h2o/web"
-)
+import "github.com/gin-gonic/gin"
 
 func (p *Plugin) indexUsers(c *gin.Context, _ string) (interface{}, error) {
+
 	var items []User
 	if err := p.Db.Order("updated_at DESC").Find(&items).Error; err != nil {
 		return nil, err
 	}
+	// TODO left join
+	var domains []Domain
+	if err := p.Db.Select([]string{"id", "name"}).Find(&domains).Error; err != nil {
+		return nil, err
+	}
+	for i := range items {
+		u := &items[i]
+		for _, d := range domains {
+			if d.ID == u.DomainID {
+				u.Domain = d
+				break
+			}
+		}
+	}
+
 	return items, nil
 }
 
@@ -20,29 +31,17 @@ type fmUserNew struct {
 	Email                string `form:"email" binding:"required,email"`
 	Password             string `form:"password" binding:"min=6,max=32"`
 	PasswordConfirmation string `form:"passwordConfirmation" binding:"eqfield=Password"`
-	Details              string `form:"details"`
 	Enable               bool   `form:"enable"`
-	StartUp              string `form:"startUp"`
-	ShutDown             string `form:"shutDown"`
+	DomainID             uint   `form:"domainId"`
 }
 
 func (p *Plugin) createUser(c *gin.Context, _ string, o interface{}) (interface{}, error) {
 	fm := o.(*fmUserNew)
-	startUp, err := time.Parse(web.FormatDateInput, fm.StartUp)
-	if err != nil {
-		return nil, err
-	}
-	shutDown, err := time.Parse(web.FormatDateInput, fm.ShutDown)
-	if err != nil {
-		return nil, err
-	}
 	user := User{
 		FullName: fm.FullName,
 		Email:    fm.Email,
-		Details:  fm.Details,
 		Enable:   fm.Enable,
-		StartUp:  startUp,
-		ShutDown: shutDown,
+		DomainID: fm.DomainID,
 	}
 	if err := user.SetPassword(fm.Password); err != nil {
 		return nil, err
@@ -55,34 +54,20 @@ func (p *Plugin) createUser(c *gin.Context, _ string, o interface{}) (interface{
 
 type fmUserEdit struct {
 	FullName string `form:"fullName" binding:"required,max=255"`
-	Details  string `form:"details"`
 	Enable   bool   `form:"enable"`
-	StartUp  string `form:"startUp"`
-	ShutDown string `form:"shutDown"`
 }
 
 func (p *Plugin) updateUser(c *gin.Context, _ string, o interface{}) (interface{}, error) {
 	fm := o.(*fmUserEdit)
-	startUp, err := time.Parse(web.FormatDateInput, fm.StartUp)
-	if err != nil {
-		return nil, err
-	}
-	shutDown, err := time.Parse(web.FormatDateInput, fm.ShutDown)
-	if err != nil {
-		return nil, err
-	}
+
 	if err := p.Db.Model(&User{}).
 		Where("id = ?", c.Param("id")).
 		Updates(map[string]interface{}{
-			"full_name": fm.FullName,
 			"enable":    fm.Enable,
-			"start_up":  startUp,
-			"shut_down": shutDown,
-			"details":   fm.Details,
+			"full_name": fm.FullName,
 		}).Error; err != nil {
 		return nil, err
 	}
-
 	return gin.H{}, nil
 }
 
@@ -92,12 +77,11 @@ type fmUserResetPassword struct {
 }
 
 func (p *Plugin) resetUserPassword(c *gin.Context, _ string, o interface{}) (interface{}, error) {
+	fm := o.(*fmUserResetPassword)
 	var item User
 	if err := p.Db.Where("id = ?", c.Param("id")).First(&item).Error; err != nil {
 		return nil, err
 	}
-	fm := o.(*fmUserResetPassword)
-
 	if err := item.SetPassword(fm.Password); err != nil {
 		return nil, err
 	}
@@ -111,13 +95,6 @@ func (p *Plugin) resetUserPassword(c *gin.Context, _ string, o interface{}) (int
 	return gin.H{}, nil
 }
 
-func (p *Plugin) destroyUser(c *gin.Context, _ string) (interface{}, error) {
-	err := p.Db.
-		Where("id = ?", c.Param("id")).
-		Delete(User{}).Error
-	return gin.H{}, err
-}
-
 type fmUserChangePassword struct {
 	Email                string `form:"email" binding:"required,email"`
 	CurrentPassword      string `form:"currentPassword" binding:"required"`
@@ -126,13 +103,13 @@ type fmUserChangePassword struct {
 }
 
 func (p *Plugin) changeUserPassword(c *gin.Context, l string, o interface{}) (interface{}, error) {
-	fm := o.(*fmUserChangePassword)
+	fm := o.(fmUserChangePassword)
 	var user User
 	if err := p.Db.Where("email = ?", fm.Email).First(&user).Error; err != nil {
 		return nil, err
 	}
 	if !user.ChkPassword(fm.CurrentPassword) {
-		return nil, p.I18n.E(l, "ops.vpn.users.email-password-not-match")
+		return nil, p.I18n.E(l, "ops.mail.users.email-password-not-match")
 	}
 	if err := user.SetPassword(fm.NewPassword); err != nil {
 		return nil, err
@@ -146,4 +123,21 @@ func (p *Plugin) changeUserPassword(c *gin.Context, l string, o interface{}) (in
 	}
 
 	return gin.H{}, nil
+}
+
+func (p *Plugin) destroyUser(c *gin.Context, l string) (interface{}, error) {
+	var user User
+	if err := p.Db.
+		Where("id = ?", c.Param("id")).First(&user).Error; err != nil {
+		return nil, err
+	}
+	var count int
+	if err := p.Db.Model(&Alias{}).Where("destination = ?", user.Email).Count(&count).Error; err != nil {
+		return nil, err
+	}
+	if count > 0 {
+		return nil, p.I18n.E(l, "errors.in-use")
+	}
+	err := p.Db.Delete(&user).Error
+	return gin.H{}, err
 }

@@ -2,7 +2,6 @@ package mail
 
 import (
 	"github.com/facebookgo/inject"
-	"github.com/gin-gonic/gin"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 	"github.com/jinzhu/gorm"
 	"github.com/kapmahc/h2o/plugins/auth"
@@ -23,9 +22,6 @@ type Plugin struct {
 
 // Init init config
 func (p *Plugin) Init() {}
-
-// Mount mount web points
-func (p *Plugin) Mount(*gin.Engine) {}
 
 // Open inject beans
 func (p *Plugin) Open(*inject.Graph) error {

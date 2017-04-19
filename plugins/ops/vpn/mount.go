@@ -4,7 +4,12 @@ import "github.com/gin-gonic/gin"
 
 // Mount mount web points
 func (p *Plugin) Mount(rt *gin.Engine) {
-	rt.POST("/ops/users/change-password", p.Wrap.FORM(&fmUserChangePassword{}, p.changeUserPassword))
+	rt.PUT("/ops/vpn/users/change-password", p.Wrap.FORM(&fmUserChangePassword{}, p.changeUserPassword))
+
+	ug := rt.Group("/ops/vpn/remote", p.tokenMiddleware)
+	ug.POST("/auth", p.Wrap.FORM(&fmSignIn{}, p.postRemoteAuth))
+	ug.POST("/connect", p.Wrap.FORM(&fmStatus{}, p.postRemoteConnect))
+	ug.POST("/disconnect", p.Wrap.FORM(&fmStatus{}, p.postRemoteDisconnect))
 
 	rg := rt.Group("/ops/vpn", p.Jwt.MustAdminMiddleware)
 	rg.GET("/readme", p.getReadme)
