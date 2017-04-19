@@ -5,6 +5,7 @@
   "dependencies": {
     "clipboard": "^1.6.1",
     "highlight.js": "^9.10.0",
+    "i18next": "^7.2.3",
     "i18next-browser-languagedetector": "^1.0.1",
     "i18next-xhr-backend": "^1.4.1",
     "jwt-decode": "^2.2.0",
@@ -15,6 +16,7 @@
     "react-dropzone": "^3.12.4",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0"
@@ -27,5 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "proxy": "http://localhost:8080",
+  "homepage": "/dashboard"
 }

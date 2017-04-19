@@ -21,3 +21,4 @@ ls -l dist
 
 - atom-beautify
 - go-plus
+- react

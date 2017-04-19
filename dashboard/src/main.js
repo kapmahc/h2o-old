@@ -1,36 +1,40 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore, combineReducers } from 'redux'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { Router, Route, browserHistory } from 'react-router'
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import createHistory from 'history/createBrowserHistory'
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
+import { Route } from 'react-router'
 
-import Layout from './Layout';
 import reducers from './reducers'
-import engines from './engines'
 
-// Add the reducer to your store on the `routing` key
+const history = createHistory()
+const middleware = routerMiddleware(history)
+
 const store = createStore(
   combineReducers({
     ...reducers,
-    routing: routerReducer
-  })
+    router: routerReducer
+  }),
+  applyMiddleware(middleware)
 )
 
-// Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, store)
+import {SignIn, SignUp} from './plugins/auth/users'
 
-function main() {  
+function main() {
   ReactDOM.render(
     <Provider store={store}>
-      <Router history={history}>
-        <Route path="/" component={Layout}>
-          {engines.routes}
-        </Route>
-      </Router>
+      <ConnectedRouter history={history}>
+        <div>
+          layout
+          <br/>
+          <Route path="/users/sign-in" component={SignIn}/>
+          <Route path="/users/sign-up" component={SignUp}/>
+        </div>
+      </ConnectedRouter>
     </Provider>,
     document.getElementById('root')
-  );
+  )
 }
 
 export default main
