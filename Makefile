@@ -24,3 +24,7 @@ frontend:
 
 clean:
 	-rm -rv $(dist) dashboard/build dist.tar.bz2
+
+init:
+	govendor sync
+	cd dashboard && npm run install
