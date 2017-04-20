@@ -46,8 +46,9 @@ class Widget extends Component{
                   })}
                   <Route component={NoMatch}/>
                 </Switch>
-                <br/>
-                <Dashboard />
+              </div>
+              <div className="row" style={{margin: "3rem auto"}}>
+                <Dashboard/>
               </div>
             </div>
             <Footer />

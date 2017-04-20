@@ -12,7 +12,6 @@ import (
 	"github.com/kapmahc/h2o/web/security"
 	"github.com/kapmahc/h2o/web/settings"
 	"github.com/kapmahc/h2o/web/uploader"
-	"github.com/urfave/cli"
 	"golang.org/x/tools/blog/atom"
 )
 
@@ -34,11 +33,6 @@ func (p *Plugin) Init() {}
 
 // Open inject beans
 func (p *Plugin) Open(*inject.Graph) error {
-	return nil
-}
-
-// Console console commands
-func (p *Plugin) Console() []cli.Command {
 	return nil
 }
 

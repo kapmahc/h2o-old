@@ -6,6 +6,8 @@ import SignIn from './users/SignIn'
 import SignUp from './users/SignUp'
 import EmailForm from './users/EmailForm'
 import ResetPassword from './users/ResetPassword'
+import Logs from './users/Logs'
+import Info from './users/Info'
 
 const Confirm = () => (<EmailForm action="confirm"/>)
 const Unlock = () => (<EmailForm action="unlock"/>)
@@ -20,7 +22,7 @@ export default {
         icon: <SocialPersonal />,
         items: [
           {label: "auth.users.info.title", to: "/users/info"},
-          {label: "auth.users.change-password.title", to: "/users/change-password"},          
+          {label: "auth.users.change-password.title", to: "/users/change-password"},
           {label: "auth.users.logs.title", to: "/users/logs"},
         ]
       })
@@ -34,5 +36,7 @@ export default {
     {path: "/users/confirm", component: Confirm},
     {path: "/users/unlock", component: Unlock},
     {path: "/users/reset-password/:token", component: ResetPassword},
+    {path: "/users/logs", component: Logs},
+    {path: "/users/info", component: Info},
   ]
 }

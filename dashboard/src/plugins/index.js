@@ -8,15 +8,14 @@ import NotificationConfirmationNumber from 'material-ui/svg-icons/notification/c
 import ActionLockOpen from 'material-ui/svg-icons/action/lock-open'
 
 import auth from './auth'
-// import site from './site'
-// import blog from './blog'
+import site from './site'
 // import reading from './reading'
 // import forum from './forum'
 
 const plugins = {
   // forum,
   // reading,
-  // site,
+  site,
   auth
 }
 
@@ -54,7 +53,7 @@ export default {
     }
   ],
   dashboard(user) {
-    return Object.keys(plugins).reduce((a, k) => {
+    return Object.keys(plugins).reduce((a, k) => {      
       return a.concat(plugins[k].dashboard(user))
     }, [])
   },
