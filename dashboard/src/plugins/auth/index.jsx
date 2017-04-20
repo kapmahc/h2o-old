@@ -3,6 +3,7 @@ import React from 'react'
 import SignIn from './users/SignIn'
 import SignUp from './users/SignUp'
 import EmailForm from './users/EmailForm'
+import ResetPassword from './users/ResetPassword'
 
 const Confirm = () => (<EmailForm action="confirm"/>)
 const Unlock = () => (<EmailForm action="unlock"/>)
@@ -15,5 +16,6 @@ export default {
     {path: "/users/forgot-password", component: ForgotPassword},
     {path: "/users/confirm", component: Confirm},
     {path: "/users/unlock", component: Unlock},
+    {path: "/users/reset-password/:token", component: ResetPassword},
   ]
 }

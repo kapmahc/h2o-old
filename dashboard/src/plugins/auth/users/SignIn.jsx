@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import i18n from 'i18next'
-
 import TextField from 'material-ui/TextField'
-import Divider from 'material-ui/Divider'
+
 
 import FormButtons from '../../../components/FormButtons'
 import SharedLinks from './SharedLinks'
@@ -10,18 +9,19 @@ import SharedLinks from './SharedLinks'
 class Widget extends Component {
   render() {
     return (
-      <div>
+      <div className="col-12">
         <form>
-          <h2>{i18n.t('auth.users.sign-in.title')}</h2>
-          <Divider/>
+          <h3>{i18n.t('auth.users.sign-in.title')}</h3>
           <TextField
-            hintText="Hint Text"
-            floatingLabelText="aaa1"
+            type="email"
+            floatingLabelText={i18n.t("attributes.email")}
+            fullWidth
           />
           <br/>
           <TextField
-            hintText="Hint Text"
-            floatingLabelText="bbb1"
+            type="password"
+            floatingLabelText={i18n.t("attributes.password")}
+            fullWidth
           />
           <FormButtons />
         </form>

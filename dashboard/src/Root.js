@@ -34,12 +34,14 @@ class Widget extends Component{
           <div>
             <Header />
             <SideBar />
-            <div style={{display: "table", margin: "0 auto"}}>
-              <Route exact path="/" component={Home}/>
-              {plugins.routes.map((r, i) => {
-                return (<Route path={r.path} component={r.component} key={i} />)
-              })}
-            </div>
+            <div className="container">
+              <div className="row">
+                <Route exact path="/" component={Home}/>
+                {plugins.routes.map((r, i) => {
+                  return (<Route path={r.path} component={r.component} key={i} />)
+                })}
+              </div>
+            </div>            
             <Footer />
           </div>
         </MuiThemeProvider>

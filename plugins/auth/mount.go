@@ -15,6 +15,7 @@ func (p *Plugin) Mount(rt *gin.Engine) {
 	nug.GET("/unlock/:token", p.Wrap.Redirect(p.getUsersUnlockToken))
 	nug.POST("/unlock", p.Wrap.FORM(&fmEmail{}, p.postUsersUnlock))
 	nug.POST("/forgot-password", p.Wrap.FORM(&fmEmail{}, p.postUsersForgotPassword))
+	nug.POST("/reset-password", p.Wrap.FORM(&fmResetPassword{}, p.postUsersResetPassword))
 
 	mug := rt.Group("/users", p.Jwt.MustSignInMiddleware)
 	mug.GET("/logs", p.Wrap.JSON(p.getUsersLogs))

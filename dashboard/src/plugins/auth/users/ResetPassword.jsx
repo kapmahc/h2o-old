@@ -13,24 +13,28 @@ class Widget extends Component {
   constructor(props){
     super(props)
     this.state = {
-      email:'',
+      password:'',
+      passwordConfirmation:'',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(e) {
-    var data = {};
-    data[e.target.id] = e.target.value;
-    this.setState(data);
+    var data = {}
+    data[e.target.id] = e.target.value
+    this.setState(data)
   }
+
   handleSubmit(e) {
-    e.preventDefault();
-    const {action, push} = this.props
+    e.preventDefault()
+    const {push, match} = this.props
     var data = new FormData()
-    data.append('email', this.state.email)
-    post(`/users/${action}`, data)
+    data.append('password', this.state.password)
+    data.append('passwordConfirmation', this.state.passwordConfirmation)
+    data.append('token', match.params.token)
+    post('/users/reset-password', data)
       .then(function(rst){
-        alert(i18n.t(`auth.messages.email-for-${action}`))
+        alert(i18n.t('auth.messages.reset-password-success'))
         push('/users/sign-in')
       })
       .catch((err) => {
@@ -38,15 +42,26 @@ class Widget extends Component {
       })
   }
   render() {
-    const {action} = this.props
     return (<div>
       <form onSubmit={this.handleSubmit}>
-        <h3>{i18n.t(`auth.users.${action}.title`)}</h3>
+        <h3>{i18n.t('auth.users.reset-password.title')}</h3>
+        <br/>
         <TextField
-          id="email"
-          type="email"
-          floatingLabelText={i18n.t("attributes.email")}
-          value={this.state.email}
+          id="password"
+          type="password"
+          floatingLabelText={i18n.t("attributes.password")}
+          hintText={i18n.t("helpers.password")}
+          value={this.state.password}
+          onChange={this.handleChange}
+          fullWidth
+        />
+        <br/>
+        <TextField
+          id="passwordConfirmation"
+          type="passwordConfirmation"
+          floatingLabelText={i18n.t("attributes.passwordConfirmation")}
+          hintText={i18n.t("helpers.passwordConfirmation")}
+          value={this.state.passwordConfirmation}
           onChange={this.handleChange}
           fullWidth
         />
@@ -59,12 +74,12 @@ class Widget extends Component {
   }
 }
 
+
 Widget.propTypes = {
-  action: PropTypes.string.isRequired,
   push: PropTypes.func.isRequired
 }
 
 export default connect(
   state => ({}),
-  {push}
+  {push},
 )(Widget)
