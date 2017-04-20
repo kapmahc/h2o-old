@@ -5,12 +5,12 @@ import { push } from 'react-router-redux'
 import TextField from 'material-ui/TextField'
 import i18n from 'i18next'
 
-
 import FormButtons from '../../../components/FormButtons'
+import {toggleStatusBar} from '../../../actions'
 import SharedLinks from './SharedLinks'
 import {post} from '../../../ajax'
 import {signIn} from '../../../actions'
-import {TOKEN, DASHBOARD} from '../../../constants'
+import {TOKEN} from '../../../constants'
 
 class Widget extends Component {
   constructor(props){
@@ -29,7 +29,7 @@ class Widget extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    const {signIn, push} = this.props
+    const {signIn, push, toggleStatusBar} = this.props
 
     var data = new FormData()
     data.append('email', this.state.email)
@@ -38,7 +38,8 @@ class Widget extends Component {
       .then(function(rst){
         sessionStorage.setItem(TOKEN, rst.token)
         signIn(rst.token)
-        push(DASHBOARD)
+        push('/')
+        toggleStatusBar(i18n.t('auth.logs.sign-in-success'))
       })
       .catch((err) => {
         alert(err)
@@ -79,9 +80,10 @@ class Widget extends Component {
 Widget.propTypes = {
   push: PropTypes.func.isRequired,
   signIn: PropTypes.func.isRequired,
+  toggleStatusBar: PropTypes.func.isRequired,
 }
 
 export default connect(
   state => ({}),
-  {push, signIn},
+  {push, signIn, toggleStatusBar},
 )(Widget)
