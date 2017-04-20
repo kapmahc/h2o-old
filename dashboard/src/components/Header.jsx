@@ -13,6 +13,9 @@ class Widget extends Component{
       title={`${i18n.t('site.subTitle')}-${i18n.t('site.title')}`}
       iconClassNameRight="material-exit-to-app"
       onLeftIconButtonTouchTap={toggleSideBar}
+      onTitleTouchTap={()=>{
+        window.open(process.env.REACT_APP_BACKEND)
+      }}
     >
     </AppBar>)
   }
