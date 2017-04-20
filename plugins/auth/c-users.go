@@ -46,7 +46,7 @@ type fmChangePassword struct {
 
 func (p *Plugin) postUsersChangePassword(c *gin.Context, l string, o interface{}) (interface{}, error) {
 	user := c.MustGet(CurrentUser).(*User)
-	fm := o.(fmChangePassword)
+	fm := o.(*fmChangePassword)
 	if !p.Hmac.Chk([]byte(fm.CurrentPassword), user.Password) {
 		return nil, p.I18n.E(l, "auth.errors.bad-password")
 	}

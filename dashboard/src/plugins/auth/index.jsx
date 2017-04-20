@@ -8,6 +8,7 @@ import EmailForm from './users/EmailForm'
 import ResetPassword from './users/ResetPassword'
 import Logs from './users/Logs'
 import Info from './users/Info'
+import ChangePassword from './users/ChangePassword'
 
 const Confirm = () => (<EmailForm action="confirm"/>)
 const Unlock = () => (<EmailForm action="unlock"/>)
@@ -38,5 +39,6 @@ export default {
     {path: "/users/reset-password/:token", component: ResetPassword},
     {path: "/users/logs", component: Logs},
     {path: "/users/info", component: Info},
+    {path: "/users/change-password", component: ChangePassword},
   ]
 }
