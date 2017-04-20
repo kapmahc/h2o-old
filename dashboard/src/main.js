@@ -1,10 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
+
 import createHistory from 'history/createBrowserHistory'
-import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
-import { Route } from 'react-router'
+import { routerReducer, routerMiddleware } from 'react-router-redux'
 
 import reducers from './reducers'
 
@@ -19,21 +18,10 @@ const store = createStore(
   applyMiddleware(middleware)
 )
 
-import {SignIn, SignUp} from './plugins/auth/users'
+import Root from './Root'
 
 function main() {
-  ReactDOM.render(
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <div>
-          layout
-          <br/>
-          <Route path="/users/sign-in" component={SignIn}/>
-          <Route path="/users/sign-up" component={SignUp}/>
-        </div>
-      </ConnectedRouter>
-    </Provider>,
-    document.getElementById('root')
+  ReactDOM.render(<Root store={store} history={history}/>, document.getElementById('root')
   )
 }
 

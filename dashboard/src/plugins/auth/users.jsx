@@ -30,6 +30,9 @@ export class SignUp extends Component {
       <li>
         <Link to="/users/sign-up">Sign up</Link>
       </li>
+      <li>
+        <Link to="/">home</Link>
+      </li>
       </ul>
     </div>)
   }
