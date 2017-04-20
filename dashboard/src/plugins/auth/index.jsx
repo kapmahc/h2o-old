@@ -21,6 +21,7 @@ export default {
         items: [
           {label: "auth.users.info.title", to: "/users/info"},
           {label: "auth.users.change-password.title", to: "/users/change-password"},
+          null,
           {label: "auth.users.logs.title", to: "/users/logs"},
         ]
       })
