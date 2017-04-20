@@ -5,7 +5,7 @@ import { push } from 'react-router-redux'
 
 import {List, ListItem} from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
-import Divider from 'material-ui/Divider'
+import ActionInfo from 'material-ui/svg-icons/action/info'
 
 import i18n from 'i18next'
 
@@ -15,14 +15,13 @@ import MobileTearSheet from './MobileTearSheet'
 class Widget extends Component{
   render () {
     const {user, push} = this.props
-    console.log(plugins.dashboard(user))
 
     return user.uid ?
       (<div className="col-12">
-          {plugins.dashboard(user).map((l,i) => (<MobileTearSheet key={i}>
+          {plugins.dashboard(user).map((l,j) => (<MobileTearSheet key={j}>
             <List>
-              <Subheader>{i18n.t(l.label)}</Subheader>
-              {l.items.map((o, i) => (o ? (<ListItem key={i} onTouchTap={() => push(o.to)} primaryText={i18n.t(o.label)} />) : <Divider key={i}/> ))}
+              <Subheader>{l.icon} {i18n.t(l.label)}</Subheader>
+              {l.items.map((o, i) => (<ListItem key={i} onTouchTap={() => push(o.to)} rightIcon={<ActionInfo />} primaryText={i18n.t(o.label)} />))}
             </List>
           </MobileTearSheet>))}
       </div>) :

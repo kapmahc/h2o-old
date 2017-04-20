@@ -17,11 +17,10 @@ export default {
     if (user.uid) {
       items.push({
         label: "auth.dashboard.title",
-        logo: <SocialPersonal />,
+        icon: <SocialPersonal />,
         items: [
           {label: "auth.users.info.title", to: "/users/info"},
-          {label: "auth.users.change-password.title", to: "/users/change-password"},
-          null,
+          {label: "auth.users.change-password.title", to: "/users/change-password"},          
           {label: "auth.users.logs.title", to: "/users/logs"},
         ]
       })
