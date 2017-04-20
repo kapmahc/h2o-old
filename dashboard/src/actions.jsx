@@ -1,4 +1,4 @@
-export const REFRESH_SITE_INFO = 'site.info.refresh'
+export const SIDE_BAR_TOGGLE = 'side-bar.toggle'
 export const USERS_SIGN_IN = "users.sign-in"
 export const USERS_SIGN_OUT = "users.sign-out"
 
@@ -15,9 +15,8 @@ export const signOut = () => {
   }
 }
 
-export const refresh = (info) => {
+export const toggleSideBar = () => {
   return {
-    type: REFRESH_SITE_INFO,
-    info
+    type: SIDE_BAR_TOGGLE    
   }
 }

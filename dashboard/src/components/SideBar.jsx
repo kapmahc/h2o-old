@@ -1,20 +1,36 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import Drawer from 'material-ui/Drawer'
+import AppBar from 'material-ui/AppBar'
 import MenuItem from 'material-ui/MenuItem'
+import i18n from 'i18next'
+
+import {toggleSideBar} from '../actions'
 
 class Widget extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {open: true};
-  }
   render () {
+    const {sideBar, toggleSideBar} = this.props
     return (<Drawer
-      open={this.state.open}      
+      open={sideBar.open}
+      docked={false}
       >
-      <MenuItem>Menu Item</MenuItem>
+      <AppBar
+        title={i18n.t('header.dashboard')}
+        onTouchTap={toggleSideBar}
+        />
+      <MenuItem>Menu Item 1</MenuItem>
       <MenuItem>Menu Item 2</MenuItem>
     </Drawer>)
   }
 }
 
-export default Widget
+Widget.propTypes = {
+  sideBar: PropTypes.object.isRequired,
+  toggleSideBar: PropTypes.func.isRequired
+}
+
+export default connect(
+  state => ({sideBar: state.sideBar}),
+  {toggleSideBar},
+)(Widget)

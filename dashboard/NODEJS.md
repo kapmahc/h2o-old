@@ -10,3 +10,4 @@ nvm install 6
 - [material-ui](http://www.material-ui.com/#/)
 - [google fonts](https://fonts.google.com/)
 - [material icons](https://material.io/icons/)
+- [react router](https://reacttraining.com/react-router/)

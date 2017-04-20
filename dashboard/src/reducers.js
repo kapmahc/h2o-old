@@ -1,4 +1,4 @@
-import {USERS_SIGN_IN, USERS_SIGN_OUT, REFRESH_SITE_INFO} from './actions'
+import {USERS_SIGN_IN, USERS_SIGN_OUT, SIDE_BAR_TOGGLE} from './actions'
 import jwtDecode from 'jwt-decode'
 
 
@@ -18,10 +18,10 @@ const currentUser = (state={}, action) => {
   }
 }
 
-const siteInfo = (state={languages:[]}, action) => {
+const sideBar = (state={open: false}, action) => {
   switch(action.type){
-    case REFRESH_SITE_INFO:
-      return Object.assign({}, action.info)
+    case SIDE_BAR_TOGGLE:
+      return Object.assign({}, {open: !state.open})
     default:
       return state;
   }
@@ -29,5 +29,5 @@ const siteInfo = (state={languages:[]}, action) => {
 
 export default {
   currentUser,
-  siteInfo
+  sideBar
 }
