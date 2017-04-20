@@ -8,6 +8,7 @@ import i18n from 'i18next'
 import FormButtons from '../../../components/FormButtons'
 import {post} from '../../../ajax'
 import SharedLinks from './SharedLinks'
+import {toggleStatusBar} from '../../../actions'
 
 class Widget extends Component {
   constructor(props){
@@ -25,13 +26,13 @@ class Widget extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    const {action, push} = this.props
+    const {action, push, toggleStatusBar} = this.props
     var data = new FormData()
     data.append('email', this.state.email)
     post(`/users/${action}`, data)
       .then(function(rst){
-        alert(i18n.t(`auth.messages.email-for-${action}`))
         push('/users/sign-in')
+        toggleStatusBar(i18n.t(`auth.messages.email-for-${action}`))        
       })
       .catch((err) => {
         alert(err)
@@ -39,7 +40,7 @@ class Widget extends Component {
   }
   render() {
     const {action} = this.props
-    return (<div>
+    return (<div className="col-12">
       <form onSubmit={this.handleSubmit}>
         <h3>{i18n.t(`auth.users.${action}.title`)}</h3>
         <TextField
@@ -66,5 +67,5 @@ Widget.propTypes = {
 
 export default connect(
   state => ({}),
-  {push}
+  {push, toggleStatusBar}
 )(Widget)

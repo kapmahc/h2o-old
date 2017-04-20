@@ -1,4 +1,4 @@
-import {USERS_SIGN_IN, USERS_SIGN_OUT, SIDE_BAR_TOGGLE} from './actions'
+import {USERS_SIGN_IN, USERS_SIGN_OUT, SIDE_BAR_TOGGLE, STATUS_BAR_TOGGLE} from './actions'
 import jwtDecode from 'jwt-decode'
 
 
@@ -27,7 +27,19 @@ const sideBar = (state={open: false}, action) => {
   }
 }
 
+
+const statusBar = (state={open: false, message: ''}, action) => {
+  switch(action.type){
+    case STATUS_BAR_TOGGLE:
+      var msg = action.message
+      return Object.assign({}, {open: msg!=null, message: msg==null?'':msg})
+    default:
+      return state;
+  }
+}
+
 export default {
   currentUser,
-  sideBar
+  sideBar,
+  statusBar
 }

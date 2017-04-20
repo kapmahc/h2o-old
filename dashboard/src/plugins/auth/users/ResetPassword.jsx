@@ -8,6 +8,7 @@ import i18n from 'i18next'
 import FormButtons from '../../../components/FormButtons'
 import {post} from '../../../ajax'
 import SharedLinks from './SharedLinks'
+import {toggleStatusBar} from '../../../actions'
 
 class Widget extends Component {
   constructor(props){
@@ -27,22 +28,22 @@ class Widget extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    const {push, match} = this.props
+    const {push, match, toggleStatusBar} = this.props
     var data = new FormData()
     data.append('password', this.state.password)
     data.append('passwordConfirmation', this.state.passwordConfirmation)
     data.append('token', match.params.token)
     post('/users/reset-password', data)
       .then(function(rst){
-        alert(i18n.t('auth.messages.reset-password-success'))
         push('/users/sign-in')
+        toggleStatusBar(i18n.t('auth.messages.reset-password-success'))
       })
       .catch((err) => {
         alert(err)
       })
   }
   render() {
-    return (<div>
+    return (<div className="col-12">
       <form onSubmit={this.handleSubmit}>
         <h3>{i18n.t('auth.users.reset-password.title')}</h3>
         <br/>
@@ -76,10 +77,11 @@ class Widget extends Component {
 
 
 Widget.propTypes = {
-  push: PropTypes.func.isRequired
+  push: PropTypes.func.isRequired,
+  toggleStatusBar: PropTypes.func.isRequired
 }
 
 export default connect(
   state => ({}),
-  {push},
+  {push, toggleStatusBar},
 )(Widget)

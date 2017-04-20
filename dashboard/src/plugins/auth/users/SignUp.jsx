@@ -8,6 +8,7 @@ import i18n from 'i18next'
 import FormButtons from '../../../components/FormButtons'
 import {post} from '../../../ajax'
 import SharedLinks from './SharedLinks'
+import {toggleStatusBar} from '../../../actions'
 
 class Widget extends Component {
   constructor(props){
@@ -27,7 +28,7 @@ class Widget extends Component {
     this.setState(data)
   }
   handleSubmit(e) {
-    const {push} = this.props
+    const {push, toggleStatusBar} = this.props
     e.preventDefault();
     var data = new FormData()
     data.append('name', this.state.name)
@@ -36,15 +37,15 @@ class Widget extends Component {
     data.append('passwordConfirmation', this.state.passwordConfirmation)
     post('/users/sign-up', data)
       .then(function(rst){
-        alert(i18n.t('auth.messages.email-for-confirm'))
         push('/users/sign-in')
+        toggleStatusBar(i18n.t('auth.messages.email-for-confirm'))
       })
       .catch((err) => {
         alert(err)
       })
   }
   render() {
-    return (<div>
+    return (<div className="col-12">
       <form onSubmit={this.handleSubmit}>
         <h3>{i18n.t('auth.users.sign-up.title')}</h3>
         <TextField
@@ -94,10 +95,11 @@ class Widget extends Component {
 
 
 Widget.propTypes = {
-  push: PropTypes.func.isRequired
+  push: PropTypes.func.isRequired,
+  toggleStatusBar: PropTypes.func.isRequired
 }
 
 export default connect(
   state => ({}),
-  {push},
+  {push, toggleStatusBar},
 )(Widget)

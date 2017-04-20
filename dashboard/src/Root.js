@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect, Provider } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import {ConnectedRouter} from 'react-router-redux'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -15,6 +15,8 @@ import Home from './components/Home'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import SideBar from './components/SideBar'
+import StatusBar from './components/StatusBar'
+import NoMatch from './components/NoMatch'
 import plugins from './plugins'
 
 class Widget extends Component{
@@ -36,13 +38,17 @@ class Widget extends Component{
             <SideBar />
             <div className="container">
               <div className="row">
-                <Route exact path="/" component={Home}/>
-                {plugins.routes.map((r, i) => {
-                  return (<Route path={r.path} component={r.component} key={i} />)
-                })}
+                <Switch>
+                  <Route exact path="/" component={Home}/>
+                  {plugins.routes.map((r, i) => {
+                    return (<Route path={r.path} component={r.component} key={i} />)
+                  })}
+                  <Route component={NoMatch}/>
+                </Switch>
               </div>
-            </div>            
+            </div>
             <Footer />
+            <StatusBar />
           </div>
         </MuiThemeProvider>
       </ConnectedRouter>
