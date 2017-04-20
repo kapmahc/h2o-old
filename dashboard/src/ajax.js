@@ -1,6 +1,6 @@
 import {TOKEN} from './constants'
 
-export const api = (path) => {
+export const backend = (path) => {
   return `${process.env.REACT_APP_BACKEND}${path}`
 }
 
@@ -23,15 +23,15 @@ const options = (method) => {
 }
 
 export const get = (path) => {
-  return fetch(api(path), options('get')).then(parse)
+  return fetch(backend(path), options('get')).then(parse)
 }
 
 export const _delete = (path) => {
-  return fetch(api(path), options('delete')).then(parse)
+  return fetch(backend(path), options('delete')).then(parse)
 }
 
 export const post = (path, body) => {
   var data = options('post')
   data.body = body
-  return fetch(api(path),data).then(parse)
+  return fetch(backend(path),data).then(parse)
 }

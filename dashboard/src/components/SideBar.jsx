@@ -10,7 +10,7 @@ import MenuItem from 'material-ui/MenuItem'
 import i18n from 'i18next'
 
 import {toggleSideBar} from '../actions'
-import items from '../plugins/non-sign-in-links'
+import plugins from '../plugins'
 
 class Widget extends Component{
   constructor(props){
@@ -34,10 +34,10 @@ class Widget extends Component{
         onTouchTap={()=>this.handleToggle('/')}
         />
       {
-        user.id ?
+        user.uid ?
           (<MenuItem>
             Menu Item aaa
-          </MenuItem>) : items.map((o, i) => (<MenuItem key={i} onTouchTap={()=>this.handleToggle(o.to)} primaryText={i18n.t(o.label)} leftIcon={o.icon} />))
+          </MenuItem>) : plugins.nonSignInLinks.map((o, i) => (<MenuItem key={i} onTouchTap={()=>this.handleToggle(o.to)} primaryText={i18n.t(o.label)} leftIcon={o.icon} />))
       }
     </Drawer>)
   }

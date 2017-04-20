@@ -12,6 +12,7 @@ import {signIn} from './actions'
 import {TOKEN} from './constants'
 
 import Home from './components/Home'
+import Dashboard from './components/Dashboard'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import SideBar from './components/SideBar'
@@ -45,6 +46,8 @@ class Widget extends Component{
                   })}
                   <Route component={NoMatch}/>
                 </Switch>
+                <br/>
+                <Dashboard />
               </div>
             </div>
             <Footer />

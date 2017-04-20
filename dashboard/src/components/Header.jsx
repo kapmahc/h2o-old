@@ -5,6 +5,7 @@ import AppBar from 'material-ui/AppBar'
 import i18n from 'i18next'
 
 import {toggleSideBar} from '../actions'
+import {backend} from '../ajax'
 
 class Widget extends Component{
   render () {
@@ -14,7 +15,7 @@ class Widget extends Component{
       iconClassNameRight="material-exit-to-app"
       onLeftIconButtonTouchTap={toggleSideBar}
       onTitleTouchTap={()=>{
-        window.open(process.env.REACT_APP_BACKEND)
+        window.open(backend('/'))
       }}
     >
     </AppBar>)

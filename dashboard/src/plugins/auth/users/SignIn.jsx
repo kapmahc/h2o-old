@@ -7,7 +7,6 @@ import i18n from 'i18next'
 
 import FormButtons from '../../../components/FormButtons'
 import {toggleStatusBar} from '../../../actions'
-import SharedLinks from './SharedLinks'
 import {post} from '../../../ajax'
 import {signIn} from '../../../actions'
 import {TOKEN} from '../../../constants'
@@ -70,8 +69,6 @@ class Widget extends Component {
           <br/>
           <FormButtons />
         </form>
-        <br/>
-        <SharedLinks />
       </div>)
   }
 }

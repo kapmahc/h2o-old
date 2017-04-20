@@ -7,7 +7,6 @@ import i18n from 'i18next'
 
 import FormButtons from '../../../components/FormButtons'
 import {post} from '../../../ajax'
-import SharedLinks from './SharedLinks'
 import {toggleStatusBar} from '../../../actions'
 
 class Widget extends Component {
@@ -32,7 +31,7 @@ class Widget extends Component {
     post(`/users/${action}`, data)
       .then(function(rst){
         push('/users/sign-in')
-        toggleStatusBar(i18n.t(`auth.messages.email-for-${action}`))        
+        toggleStatusBar(i18n.t(`auth.messages.email-for-${action}`))
       })
       .catch((err) => {
         alert(err)
@@ -54,8 +53,6 @@ class Widget extends Component {
         <br/>
         <FormButtons />
       </form>
-      <br/>
-      <SharedLinks />
     </div>)
   }
 }
