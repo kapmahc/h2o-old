@@ -1,10 +1,9 @@
-@import "~antd/dist/antd.css";
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~fixed-data-table/dist/fixed-data-table.css";
+/*@import "~highlight.js/styles/default.css";*/
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
-.header-logo {
-  width: 120px;
-  height: 31px;
-  background: #333;
-  border-radius: 6px;
-  margin: 16px 24px 16px 0;
-  float: left;
+body {
+  padding-top: 4rem;
+  padding-bottom: 3rem;
 }

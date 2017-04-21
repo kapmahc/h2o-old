@@ -1,6 +1,3 @@
-import React from 'react'
-import Icon from 'antd'
-
 import auth from './auth'
 // import site from './site'
 // import reading from './reading'
@@ -18,32 +15,32 @@ export default {
     {
       to: "/users/sign-in",
       label: "auth.users.sign-in.title",
-      icon: <Icon type="login" />
+      icon: "security"
     },
     {
       to: "/users/sign-up",
       label: "auth.users.sign-up.title",
-      icon: <Icon type="user-add" />
+      icon: "person_add"
     },
     {
       to: "/users/forgot-password",
       label: "auth.users.forgot-password.title",
-      icon: <Icon type="frown-o" />
+      icon: "find_replace"
     },
     {
       to: "/users/confirm",
       label: "auth.users.confirm.title",
-      icon: <Icon type="check-circle-o" />
+      icon: "confirmation_number"
     },
     {
       to: "/users/unlock",
       label: "auth.users.unlock.title",
-      icon: <Icon type="unlock" />
+      icon: "lock_open"
     },
     {
       to: "/leave-words/new",
       label: "site.leave-words.new.title",
-      icon: <Icon type="question-circle-o" />
+      icon: "bug_report"
     }
   ],
   dashboard(user) {

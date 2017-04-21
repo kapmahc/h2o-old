@@ -5,9 +5,7 @@ const { Footer } = Layout
 
 class Widget extends Component {
   render() {
-    return (<Footer style={{ textAlign: 'center' }}>
-      © {i18n.t('site.copyright')}
-    </Footer>)
+    return (<div></div>)
   }
 }
 

@@ -1,36 +1,30 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { Row, Col, ListGroup, ListGroupItem } from 'reactstrap'
+import i18n from 'i18next'
 
-import { Layout, Row, Col  } from 'antd'
-const { Content } = Layout
+import Application from './Application'
+import Icon from '../components/Icon'
 
-import Footer from '../components/Footer'
-import Header from '../components/Header'
+import plugins from '../plugins'
 
-class Widget extends Component {
-  render() {
-    const {children} = this.props
-    return (<Layout>
-      <Header />
-      <Content>
-        <Row>
-          <Col offset={4} span={16}>{children}</Col>
-        </Row>
-        <Row>
-          <Col offset={6} span={8}>
-            <ul>
-              <li>aaa</li>
-              <li>bbb</li>
-            </ul>
-          </Col>
-        </Row>
-      </Content>
-      <Footer />
-    </Layout>)
-  }
-}
+const Widget = ({children, push}) => (<Application>
+  <Row>
+    <Col md={{size:8, offset:2}}>
+      {children}
+      <br/>
+      <ListGroup>
+        {plugins.nonSignInLinks.map((o,i)=>(<ListGroupItem key={i} onClick={()=>push(o.to)} action>
+          <Icon name={o.icon}/>
+          &nbsp;
+          {i18n.t(o.label)}
+        </ListGroupItem>))}
+      </ListGroup>
+    </Col>
+  </Row>
+</Application>)
 
 Widget.propTypes = {
   user: PropTypes.object.isRequired,

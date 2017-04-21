@@ -1,5 +1,4 @@
 import React from 'react'
-import Icon from 'antd'
 
 import SignIn from './users/SignIn'
 import SignUp from './users/SignUp'
@@ -19,11 +18,23 @@ export default {
     if (user.uid) {
       items.push({
         label: "auth.dashboard.title",
-        icon: <Icon type="user" />,
+        icon: "person",
         items: [
-          {label: "auth.users.info.title", to: "/users/info", icon: <Icon type="info-circle-o" />},
-          {label: "auth.users.change-password.title", to: "/users/change-password", icon: <Icon type="key" />},
-          {label: "auth.users.logs.title", to: "/users/logs", icon: <Icon type="calendar" />},
+          {
+            label: "auth.users.info.title",
+            to: "/users/info",
+            icon: "info_outline"
+          },
+          {
+            label: "auth.users.change-password.title",
+            to: "/users/change-password",
+            icon: "vpn_key"
+          },
+          {
+            label: "auth.users.logs.title",
+            to: "/users/logs",
+            icon: "date_range"
+          },
         ]
       })
     }

@@ -3,17 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^2.9.1",
+    "bootstrap": "^4.0.0-alpha.6",
+    "draft-js": "^0.10.0",
+    "fixed-data-table": "^0.6.3",
     "i18next": "^8.0.0",
     "i18next-browser-languagedetector": "^1.0.1",
     "i18next-xhr-backend": "^1.4.1",
     "jwt-decode": "^2.2.0",
     "react": "^15.5.4",
+    "react-addons-css-transition-group": "^15.5.2",
+    "react-addons-transition-group": "^15.5.2",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
+    "reactstrap": "^4.5.0",
     "redux": "^3.6.0"
   },
   "devDependencies": {
