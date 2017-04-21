@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect, Provider } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import {ConnectedRouter} from 'react-router-redux'
+import { Container } from 'reactstrap'
 import i18n from 'i18next'
 
 import {signIn} from './actions'
@@ -12,9 +13,11 @@ import {base} from './ajax'
 
 import NoMatch from './components/NoMatch'
 import Home from './components/Home'
+import Footer from './components/Footer'
 
 class Widget extends Component{
   componentDidMount() {
+    console.log('init')
     const { signIn } = this.props
     var token = sessionStorage.getItem(TOKEN)
     if (token){
@@ -34,6 +37,9 @@ class Widget extends Component{
             })}
             <Route component={NoMatch}/>
           </Switch>
+          <Container>
+            <Footer />
+          </Container>
         </div>
       </ConnectedRouter>
     </Provider>)

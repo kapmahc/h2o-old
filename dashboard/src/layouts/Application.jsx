@@ -1,22 +1,33 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-import { Container } from 'reactstrap'
+import { Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap'
+import i18n from 'i18next'
 
-import Footer from '../components/Footer'
+import Icon from '../components/Icon'
 
-class Widget extends Component {
-  render() {
-    const {children} = this.props
-    return (<div>
-      <Container>
-        {children}
-        <Footer />
-      </Container>
-    </div>)
+import plugins from '../plugins'
+import { push } from '../ajax'
+
+const Widget = ({children, push, user}) => (<Container>  
+  {
+    user.uid ?
+      children :
+      (<Row>
+        <Col md={{size:8, offset:2}}>
+          {children}
+          <br/>
+          <ListGroup>
+            {plugins.nonSignInLinks.map((o,i)=>(<ListGroupItem key={i} onClick={()=>push(o.to)} action>
+              <Icon name={o.icon}/>
+              &nbsp;
+              {i18n.t(o.label)}
+            </ListGroupItem>))}
+          </ListGroup>
+        </Col>
+      </Row>)
   }
-}
+</Container>)
 
 Widget.propTypes = {
   user: PropTypes.object.isRequired,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import NonSignIn from '../../../layouts/NonSignIn'
+import Application from '../../../layouts/Application'
 
 class Widget extends Component {
   constructor(props){
@@ -22,12 +22,12 @@ class Widget extends Component {
     e.preventDefault();
   }
   render() {
-    return (<NonSignIn>
+    return (<Application>
       <form onSubmit={this.handleSubmit}>
         sign up
         <hr/>
       </form>
-    </NonSignIn>)
+    </Application>)
   }
 }
 
