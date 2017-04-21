@@ -30,6 +30,7 @@ export default {
             to: "/users/change-password",
             icon: "vpn_key"
           },
+          null,
           {
             label: "auth.users.logs.title",
             to: "/users/logs",
