@@ -239,8 +239,9 @@ func (p *Plugin) Console() []cli.Command {
 			Action: func(*cli.Context) error {
 				gin.SetMode(gin.ReleaseMode)
 				rt := gin.New()
+				ht, api := p.Wrap.Group(rt)
 				web.Walk(func(en web.Plugin) error {
-					en.Mount(rt)
+					en.Mount(ht, api)
 					return nil
 				})
 				tpl := "%-7s %s\n"
@@ -592,19 +593,22 @@ func (p *Plugin) runServer(*cli.Context, *inject.Graph) error {
 	rt := gin.Default()
 	rt.LoadHTMLGlob("templates/*.html")
 
-	// ---------
+	// --------------------
+	rt.Use(
+		p.I18n.Middleware,
+	)
+	ht, api := p.Wrap.Group(rt)
 	// cfg := cors.DefaultConfig()
 	// cfg.AllowMethods = append(cfg.AllowMethods, http.MethodDelete, http.MethodPatch)
 	// cfg.AllowCredentials = true
 	// cfg.AllowHeaders = append(cfg.AllowHeaders, "Authorization")
 	// cfg.AllowOrigins = []string{web.Home()}
-	rt.Use(
+	api.Use(
 		// cors.New(cfg),
-		p.I18n.Middleware,
 		p.Jwt.CurrentUserMiddleware,
 	)
 	web.Walk(func(en web.Plugin) error {
-		en.Mount(rt)
+		en.Mount(ht, api)
 		return nil
 	})
 

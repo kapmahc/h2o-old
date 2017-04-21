@@ -3,10 +3,10 @@ package mail
 import "github.com/gin-gonic/gin"
 
 // Mount mount web points
-func (p *Plugin) Mount(rt *gin.Engine) {
-	rt.PUT("/ops/mail/users/change-password", p.Wrap.FORM(&fmUserChangePassword{}, p.changeUserPassword))
+func (p *Plugin) Mount(_ *gin.RouterGroup, api *gin.RouterGroup) {
+	api.PUT("/ops/mail/users/change-password", p.Wrap.FORM(&fmUserChangePassword{}, p.changeUserPassword))
 
-	rg := rt.Group("/ops/mail", p.Jwt.MustAdminMiddleware)
+	rg := api.Group("/ops/mail", p.Jwt.MustAdminMiddleware)
 	rg.GET("/readme", p.getReadme)
 
 	rg.GET("/users", p.Wrap.JSON(p.indexUsers))

@@ -3,28 +3,26 @@ package site
 import "github.com/gin-gonic/gin"
 
 // Mount mount web points
-func (p *Plugin) Mount(rt *gin.Engine) {
-	rt.GET("/", p.getHome)
+func (p *Plugin) Mount(ht *gin.RouterGroup, api *gin.RouterGroup) {
 
-	hg := rt.Group("/htdocs/:lang")
-	hg.GET("/", p.Wrap.HTML("site/home", p.getHomeHTML))
-	hg.GET("/posts/:name", p.Wrap.HTML("site/posts/show", p.showPostHTML))
-	hg.GET("/posts", p.Wrap.HTML("site/posts/index", p.indexPostsHTML))
-	hg.GET("/notices", p.Wrap.HTML("site/notices/index", p.indexNoticesHTML))
+	ht.GET("/", p.Wrap.HTML("site/home", p.getHomeHTML))
+	ht.GET("/posts/:name", p.Wrap.HTML("site/posts/show", p.showPostHTML))
+	ht.GET("/posts", p.Wrap.HTML("site/posts/index", p.indexPostsHTML))
+	ht.GET("/notices", p.Wrap.HTML("site/notices/index", p.indexNoticesHTML))
 
-	rt.GET("/locales/:lang", p.Wrap.JSON(p.getLocales))
-	rt.GET("/site/info", p.Wrap.JSON(p.getSiteInfo))
+	api.GET("/locales/:lang", p.Wrap.JSON(p.getLocales))
+	api.GET("/site/info", p.Wrap.JSON(p.getSiteInfo))
 
-	rt.GET("/notices", p.Wrap.JSON(p.indexNotices))
-	rt.POST("/notices", p.Jwt.MustAdminMiddleware, p.Wrap.FORM(&fmNotice{}, p.createNotice))
-	rt.POST("/notices/:id", p.Jwt.MustAdminMiddleware, p.Wrap.FORM(&fmNotice{}, p.updateNotice))
-	rt.DELETE("/notices/:id", p.Jwt.MustAdminMiddleware, p.Wrap.JSON(p.destroyNotice))
+	api.GET("/notices", p.Wrap.JSON(p.indexNotices))
+	api.POST("/notices", p.Jwt.MustAdminMiddleware, p.Wrap.FORM(&fmNotice{}, p.createNotice))
+	api.POST("/notices/:id", p.Jwt.MustAdminMiddleware, p.Wrap.FORM(&fmNotice{}, p.updateNotice))
+	api.DELETE("/notices/:id", p.Jwt.MustAdminMiddleware, p.Wrap.JSON(p.destroyNotice))
 
-	rt.GET("/leave-words", p.Jwt.MustAdminMiddleware, p.Wrap.JSON(p.indexLeaveWords))
-	rt.POST("/leave-words", p.Wrap.FORM(&fmLeaveWord{}, p.createLeaveWord))
-	rt.DELETE("/leave-words/:id", p.Jwt.MustAdminMiddleware, p.Wrap.JSON(p.destroyLeaveWord))
+	api.GET("/leave-words", p.Jwt.MustAdminMiddleware, p.Wrap.JSON(p.indexLeaveWords))
+	api.POST("/leave-words", p.Wrap.FORM(&fmLeaveWord{}, p.createLeaveWord))
+	api.DELETE("/leave-words/:id", p.Jwt.MustAdminMiddleware, p.Wrap.JSON(p.destroyLeaveWord))
 
-	ag := rt.Group("/admin", p.Jwt.MustAdminMiddleware)
+	ag := api.Group("/admin", p.Jwt.MustAdminMiddleware)
 	ag.GET("/site/status", p.Wrap.JSON(p.getAdminSiteStatus))
 	ag.POST("/site/info", p.Wrap.FORM(&fmSiteInfo{}, p.postAdminSiteInfo))
 	ag.POST("/site/author", p.Wrap.FORM(&fmSiteAuthor{}, p.postAdminSiteAuthor))

@@ -1,8 +1,6 @@
 package auth
 
 import (
-	"fmt"
-
 	"github.com/facebookgo/inject"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 	"github.com/jinzhu/gorm"
@@ -45,7 +43,7 @@ func (p *Plugin) Atom(lang string) ([]*atom.Entry, error) {
 func (p *Plugin) Sitemap(languages ...string) ([]stm.URL, error) {
 	var items []stm.URL
 	for _, l := range languages {
-		items = append(items, stm.URL{"loc": fmt.Sprintf("htdocs/%s/users", l)})
+		items = append(items, stm.URL{"loc": p.Wrap.URLFor(l, "/users")})
 	}
 	return items, nil
 }

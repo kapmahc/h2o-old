@@ -1,8 +1,6 @@
 package forum
 
 import (
-	"fmt"
-
 	"github.com/facebookgo/inject"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 	"github.com/jinzhu/gorm"
@@ -46,9 +44,9 @@ func (p *Plugin) Sitemap(languages ...string) ([]stm.URL, error) {
 	for _, l := range languages {
 		items = append(
 			items,
-			stm.URL{"loc": fmt.Sprintf("htdocs/%s/forum/tags", l)},
-			stm.URL{"loc": fmt.Sprintf("htdocs/%s/forum/articles", l)},
-			stm.URL{"loc": fmt.Sprintf("htdocs/%s/forum/comments", l)},
+			stm.URL{"loc": p.Wrap.URLFor(l, "/forum/tags")},
+			stm.URL{"loc": p.Wrap.URLFor(l, "/forum/articles")},
+			stm.URL{"loc": p.Wrap.URLFor(l, "/forum/comments")},
 		)
 	}
 	// -------------
@@ -71,7 +69,7 @@ func (p *Plugin) Sitemap(languages ...string) ([]stm.URL, error) {
 			items = append(
 				items,
 				stm.URL{
-					"loc":     fmt.Sprintf("htdocs/%s/forum/articles/%d", l, it.ID),
+					"loc":     p.Wrap.URLFor(l, "/forum/articles/%d", it.ID),
 					"lastmod": it.UpdatedAt,
 				},
 			)
@@ -80,7 +78,7 @@ func (p *Plugin) Sitemap(languages ...string) ([]stm.URL, error) {
 			items = append(
 				items,
 				stm.URL{
-					"loc":     fmt.Sprintf("htdocs/%s/forum/tags/%d", l, it.ID),
+					"loc":     p.Wrap.URLFor(l, "/forum/articles/tags/%d", it.ID),
 					"lastmod": it.UpdatedAt,
 				},
 			)

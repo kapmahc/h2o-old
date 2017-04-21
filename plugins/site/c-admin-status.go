@@ -119,8 +119,9 @@ func (p *Plugin) _dbStatus() (gin.H, error) {
 
 func (p *Plugin) _routes() gin.RoutesInfo {
 	rt := gin.New()
+	ht, api := p.Wrap.Group(rt)
 	web.Walk(func(en web.Plugin) error {
-		en.Mount(rt)
+		en.Mount(ht, api)
 		return nil
 	})
 	return rt.Routes()

@@ -20,7 +20,7 @@ type Plugin struct {
 func (p *Plugin) Init() {}
 
 // Mount mount web points
-func (p *Plugin) Mount(*gin.Engine) {}
+func (p *Plugin) Mount(ht *gin.RouterGroup, api *gin.RouterGroup) {}
 
 // Open inject beans
 func (p *Plugin) Open(*inject.Graph) error {

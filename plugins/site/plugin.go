@@ -1,8 +1,6 @@
 package site
 
 import (
-	"fmt"
-
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 	"github.com/jinzhu/gorm"
 	"github.com/kapmahc/h2o/plugins/auth"
@@ -45,9 +43,9 @@ func (p *Plugin) Sitemap(languages ...string) ([]stm.URL, error) {
 	for _, l := range languages {
 		items = append(
 			items,
-			stm.URL{"loc": fmt.Sprintf("htdocs/%s/", l)},
-			stm.URL{"loc": fmt.Sprintf("htdocs/%s/notices", l)},
-			stm.URL{"loc": fmt.Sprintf("htdocs/%s/posts", l)},
+			stm.URL{"loc": p.Wrap.URLFor(l, "/")},
+			stm.URL{"loc": p.Wrap.URLFor(l, "/notices")},
+			stm.URL{"loc": p.Wrap.URLFor(l, "/posts")},
 		)
 	}
 
@@ -62,7 +60,7 @@ func (p *Plugin) Sitemap(languages ...string) ([]stm.URL, error) {
 		items = append(
 			items,
 			stm.URL{
-				"loc":     fmt.Sprintf("htdocs/%s/posts/%s", it.Lang, it.Name),
+				"loc":     p.Wrap.URLFor(it.Lang, "/posts/%s", it.Name),
 				"lastmod": it.UpdatedAt,
 			},
 		)

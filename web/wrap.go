@@ -1,6 +1,7 @@
 package web
 
 import (
+	"fmt"
 	"net/http"
 
 	log "github.com/Sirupsen/logrus"
@@ -12,6 +13,23 @@ import (
 // Wrap wrap
 type Wrap struct {
 	Render *render.Render `inject:""`
+}
+
+func (p *Wrap) ht() string {
+	return "htdocs"
+}
+
+// URLFor htdoc url for
+func (p *Wrap) URLFor(lang string, path string, args ...interface{}) string {
+	args = append([]interface{}{p.ht(), lang}, args)
+	return fmt.Sprintf("/%s/%s"+path, args...)
+}
+
+// Group create mount group
+func (p *Wrap) Group(rt *gin.Engine) (ht *gin.RouterGroup, api *gin.RouterGroup) {
+	ht = rt.Group("/" + p.ht() + "/:lang")
+	api = rt.Group("/api")
+	return
 }
 
 // Redirect wrap redirect
@@ -39,7 +57,7 @@ func (p *Wrap) FORM(fm interface{}, fn func(*gin.Context, string, interface{}) (
 // HTML wrap html render
 func (p *Wrap) HTML(t string, f func(*gin.Context, string) (gin.H, error)) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		lang := c.Param("lang")
+		lang := c.MustGet(i18n.LOCALE).(string)
 		if v, e := f(c, lang); e == nil {
 			v["lang"] = lang
 			p.Render.HTML(c.Writer, http.StatusOK, t, v)

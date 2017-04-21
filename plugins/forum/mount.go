@@ -3,15 +3,15 @@ package forum
 import "github.com/gin-gonic/gin"
 
 // Mount mount web points
-func (p *Plugin) Mount(rt *gin.Engine) {
-	hg := rt.Group("/htdocs/:lang/forum")
+func (p *Plugin) Mount(ht *gin.RouterGroup, api *gin.RouterGroup) {
+	hg := ht.Group("/forum")
 	hg.GET("/articles", p.Wrap.HTML("forum/articles/index", p.indexArticlesHTML))
 	hg.GET("/articles/:id", p.Wrap.HTML("forum/articles/show", p.showArticleHTML))
 	hg.GET("/tags", p.Wrap.HTML("forum/tags/index", p.indexTagsHTML))
 	hg.GET("/tags/:id", p.Wrap.HTML("forum/tags/show", p.showTagHTML))
 	hg.GET("/comments", p.Wrap.HTML("forum/comments/index", p.indexCommentsHTML))
 
-	rg := rt.Group("/forum")
+	rg := api.Group("/forum")
 
 	rg.GET("/articles", p.Jwt.MustSignInMiddleware, p.Wrap.JSON(p.indexArticles))
 	rg.POST("/articles", p.Jwt.MustSignInMiddleware, p.Wrap.FORM(&fmArticle{}, p.createArticle))

@@ -12,7 +12,7 @@ import (
 // Plugin plugin
 type Plugin interface {
 	Init()
-	Mount(*gin.Engine)
+	Mount(*gin.RouterGroup, *gin.RouterGroup)
 	Open(*inject.Graph) error
 	Console() []cli.Command
 	Atom(lang string) ([]*atom.Entry, error)

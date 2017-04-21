@@ -1,8 +1,6 @@
 package reading
 
 import (
-	"fmt"
-
 	"github.com/facebookgo/inject"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 	"github.com/jinzhu/gorm"
@@ -40,8 +38,8 @@ func (p *Plugin) Sitemap(languages ...string) ([]stm.URL, error) {
 	for _, l := range languages {
 		items = append(
 			items,
-			stm.URL{"loc": fmt.Sprintf("htdocs/%s/reading/books", l)},
-			stm.URL{"loc": fmt.Sprintf("htdocs/%s/reading/notes", l)},
+			stm.URL{"loc": p.Wrap.URLFor(l, "/reading/books")},
+			stm.URL{"loc": p.Wrap.URLFor(l, "/reading/notes")},
 		)
 	}
 
@@ -57,7 +55,7 @@ func (p *Plugin) Sitemap(languages ...string) ([]stm.URL, error) {
 			items = append(
 				items,
 				stm.URL{
-					"loc":     fmt.Sprintf("htdocs/%s/reading/books/%d", l, it.ID),
+					"loc":     p.Wrap.URLFor(l, "/reading/books/%d", it.ID),
 					"lastmod": it.UpdatedAt,
 				},
 			)

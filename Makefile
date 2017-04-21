@@ -10,7 +10,9 @@ COPYRIGHT=`head -n 1 LICENSE`
 USAGE=`sed -n '3p' README.md`
 
 build: backend frontend
-	-cp -r dashboard/build $(dist)/dashboard
+	-cp -r dashboard/build/* $(dist)/
+	-mv $(dist)/index.html $(dist)/dashboard.html
+	-cp templates/index.html $(dist)/
 	tar jcvf dist.tar.bz2 $(dist)
 
 backend:
