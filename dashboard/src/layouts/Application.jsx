@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-
 import { Container } from 'reactstrap'
+
+import Footer from '../components/Footer'
 
 class Widget extends Component {
   render() {
@@ -11,6 +12,7 @@ class Widget extends Component {
     return (<div>
       <Container>
         {children}
+        <Footer />
       </Container>
     </div>)
   }
