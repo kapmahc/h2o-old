@@ -1,3 +1,5 @@
+import { push as _push } from 'react-router-redux'
+
 import {TOKEN} from './constants'
 
 const parse = (res) => {
@@ -31,3 +33,7 @@ export const post = (path, body) => {
   data.body = body
   return fetch(path,data).then(parse)
 }
+
+export const base = (path) => `/dashboard${path}`
+
+export const push = (path) => _push(base(path))

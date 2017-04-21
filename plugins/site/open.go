@@ -51,7 +51,7 @@ func (p *Plugin) Open(g *inject.Graph) error {
 	theme := viper.GetString("server.theme")
 	up, err := fs.NewFileSystemStore(
 		path.Join("public", "files"),
-		web.Backend()+"/files",
+		web.Home()+"/files",
 	)
 	if err != nil {
 		return err
@@ -103,6 +103,9 @@ func (p *Plugin) openDatabase() (*gorm.DB, error) {
 }
 func (p *Plugin) openRender(theme string) *render.Render {
 	fm := template.FuncMap{
+		"assets": func(n string) string {
+			return web.Home() + "/assets/" + n
+		},
 		"t": func(lang, code string, args ...interface{}) string {
 			return p.I18n.T(lang, code, args...)
 		},

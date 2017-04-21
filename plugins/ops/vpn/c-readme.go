@@ -13,7 +13,7 @@ func (p *Plugin) getReadme(c *gin.Context) {
 	data := gin.H{}
 	data["user"] = c.MustGet(auth.CurrentUser)
 	data["name"] = web.Name()
-	data["home"] = web.Backend()
+	data["home"] = web.Home()
 	data["port"] = 1194
 	data["network"] = "10.18.0"
 

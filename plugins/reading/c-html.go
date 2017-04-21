@@ -76,7 +76,7 @@ func (p *Plugin) showBookHTML(c *gin.Context, _ string) (gin.H, error) {
 	// c.Writer.Header().Set("Content-Type", "text/html; charset=utf-8")
 	p.writePoints(
 		&buf,
-		fmt.Sprintf("%s/reading/pages/%s", web.Backend(), id),
+		fmt.Sprintf("%s/reading/pages/%s", web.Home(), id),
 		bk.Ncx.Points,
 	)
 

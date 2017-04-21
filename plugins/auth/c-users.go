@@ -5,7 +5,6 @@ import (
 
 	"github.com/SermoDigital/jose/jws"
 	"github.com/gin-gonic/gin"
-	"github.com/kapmahc/h2o/web"
 )
 
 func (p *Plugin) deleteUsersSignOut(c *gin.Context, l string) (interface{}, error) {
@@ -119,7 +118,7 @@ func (p *Plugin) getUsersConfirmToken(c *gin.Context, l string) (string, error) 
 }
 
 func (p *Plugin) signInURL() string {
-	return web.Frontend() + "/users/sign-in"
+	return "/dashboard/users/sign-in"
 }
 
 type fmEmail struct {

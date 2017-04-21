@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
 import { Row, Col, ListGroup, ListGroupItem } from 'reactstrap'
 import i18n from 'i18next'
 
@@ -9,6 +8,7 @@ import Application from './Application'
 import Icon from '../components/Icon'
 
 import plugins from '../plugins'
+import { push } from '../ajax'
 
 const Widget = ({children, push}) => (<Application>
   <Row>

@@ -11,14 +11,12 @@ func Name() string {
 	return viper.GetString("server.name")
 }
 
-// Backend backend home
-func Backend() string {
-	return viper.GetString("server.backend")
-}
-
-// Frontend frontend home
-func Frontend() string {
-	return viper.GetString("server.frontend")
+// Home  home url
+func Home() string {
+	if viper.GetBool("server.ssl") {
+		return "https://" + Name()
+	}
+	return "http://" + Name()
 }
 
 // IsProduction production mode ?

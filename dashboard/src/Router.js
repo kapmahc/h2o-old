@@ -8,6 +8,7 @@ import i18n from 'i18next'
 import {signIn} from './actions'
 import {TOKEN} from './constants'
 import plugins from './plugins'
+import {base} from './ajax'
 
 import NoMatch from './components/NoMatch'
 import Home from './components/Home'
@@ -27,9 +28,9 @@ class Widget extends Component{
       <ConnectedRouter history={history}>
         <div>
           <Switch>
-            <Route exact path="/" component={Home}/>
+            <Route exact path={base("/")} component={Home}/>
             {plugins.routes.map((r, i) => {
-              return (<Route path={r.path} component={r.component} key={i} />)
+              return (<Route path={base(r.path)} component={r.component} key={i} />)
             })}
             <Route component={NoMatch}/>
           </Switch>

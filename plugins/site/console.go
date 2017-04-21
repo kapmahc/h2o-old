@@ -15,7 +15,6 @@ import (
 	"github.com/BurntSushi/toml"
 	log "github.com/Sirupsen/logrus"
 	"github.com/facebookgo/inject"
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
@@ -310,21 +309,17 @@ func (p *Plugin) generateNginxConf(*cli.Context) error {
 	defer fd.Close()
 
 	return web.Template(fd, "nginx.conf", struct {
-		Frontend string
-		Backend  string
-		Port     int
-		Root     string
-		Theme    string
-		Version  string
-		Ssl      bool
+		Port  int
+		Root  string
+		Theme string
+		Name  string
+		Ssl   bool
 	}{
-		Frontend: "my." + name,
-		Backend:  "www." + name,
-		Port:     viper.GetInt("server.port"),
-		Root:     pwd,
-		Theme:    viper.GetString("server.theme"),
-		Version:  "v1",
-		Ssl:      viper.GetBool("server.ssl"),
+		Name:  name,
+		Port:  viper.GetInt("server.port"),
+		Root:  pwd,
+		Theme: viper.GetString("server.theme"),
+		Ssl:   viper.GetBool("server.ssl"),
 	})
 }
 
@@ -596,21 +591,15 @@ func (p *Plugin) runServer(*cli.Context, *inject.Graph) error {
 	}
 	rt := gin.Default()
 	rt.LoadHTMLGlob("templates/*.html")
-	// --------------
-	theme := viper.GetString("server.theme")
-	if !web.IsProduction() {
-		// using nginx for production
-		rt.Static("/assets", path.Join("themes", theme, "assets"))
-		rt.Static("/files", path.Join("public", "files"))
-	}
+
 	// ---------
-	cfg := cors.DefaultConfig()
-	cfg.AllowMethods = append(cfg.AllowMethods, http.MethodDelete, http.MethodPatch)
-	cfg.AllowCredentials = true
-	cfg.AllowHeaders = append(cfg.AllowHeaders, "Authorization")
-	cfg.AllowOrigins = []string{web.Frontend()}
+	// cfg := cors.DefaultConfig()
+	// cfg.AllowMethods = append(cfg.AllowMethods, http.MethodDelete, http.MethodPatch)
+	// cfg.AllowCredentials = true
+	// cfg.AllowHeaders = append(cfg.AllowHeaders, "Authorization")
+	// cfg.AllowOrigins = []string{web.Home()}
 	rt.Use(
-		cors.New(cfg),
+		// cors.New(cfg),
 		p.I18n.Middleware,
 		p.Jwt.CurrentUserMiddleware,
 	)
@@ -660,7 +649,7 @@ func (p *Plugin) runServer(*cli.Context, *inject.Graph) error {
 
 func (p *Plugin) writeSitemap(root string) error {
 	sm := stm.NewSitemap()
-	sm.SetDefaultHost(web.Backend())
+	sm.SetDefaultHost(web.Home())
 	sm.SetPublicPath(root)
 	sm.SetCompress(true)
 	sm.SetSitemapsPath("/")
@@ -699,7 +688,7 @@ func (p *Plugin) writeRssAtom(root string, lang string) error {
 		},
 		Entry: make([]*atom.Entry, 0),
 	}
-	home := web.Backend()
+	home := web.Home()
 	if err := web.Walk(func(en web.Plugin) error {
 		items, err := en.Atom(lang)
 		if err != nil {
@@ -739,7 +728,7 @@ func (p *Plugin) writeRobotsTxt(root string) error {
 
 	return web.Template(fd, "robots.txt", struct {
 		Home string
-	}{Home: web.Backend()})
+	}{Home: web.Home()})
 }
 
 func (p *Plugin) writeGoogleVerify(root string) error {
