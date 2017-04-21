@@ -9,9 +9,7 @@ AUTHOR_EMAIL=`git config --get user.email`
 COPYRIGHT=`head -n 1 LICENSE`
 USAGE=`sed -n '3p' README.md`
 
-build: backend frontend
-	-cp -r dashboard/build/* $(dist)/
-	-mv $(dist)/index.html $(dist)/dashboard.html
+build: frontend backend
 	-cp templates/index.html $(dist)/
 	tar jcvf dist.tar.bz2 $(dist)
 
@@ -23,6 +21,9 @@ backend:
 
 frontend:
 	cd dashboard && npm run build
+	mkdir -pv $(dist)/public
+	-cp -rv dashboard/build/* $(dist)/public
+	-mv -v $(dist)/public/index.html $(dist)/public/dashboard.html
 
 clean:
 	-rm -rv $(dist) dashboard/build dist.tar.bz2
