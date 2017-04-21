@@ -8,26 +8,25 @@ const { Header, Content, Footer } = Layout
 
 class Widget extends Component {
   render() {
-    const {children} = this.props
+    const {children, site} = this.props
     return (<Layout>
       <Header>
-        <div className="logo" />
+        <div className="header-logo" />
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={['2']}
+          defaultSelectedKeys={['1']}
           style={{ lineHeight: '64px' }}
         >
           <Menu.Item key="1">nav 1</Menu.Item>
-          <Menu.Item key="2">nav 2</Menu.Item>
-          <Menu.Item key="3">nav 3</Menu.Item>
         </Menu>
       </Header>
-      <Content style={{ padding: '0 50px' }}>
+      <Content style={{ padding: '0 10rem' }}>
         {children}
       </Content>
       <Footer style={{ textAlign: 'center' }}>
-        Ant Design ©2016 Created by Ant UED
+        <hr/>
+        ©{site.copyright}
       </Footer>
     </Layout>)
   }

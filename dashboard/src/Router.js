@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { connect, Provider } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import {ConnectedRouter} from 'react-router-redux'
+import i18n from 'i18next'
 
-import {signIn, refresh} from './actions'
+import {signIn} from './actions'
 import {TOKEN} from './constants'
 import plugins from './plugins'
 
@@ -18,6 +19,7 @@ class Widget extends Component{
     if (token){
       signIn(token)
     }
+    document.title = `${i18n.t('site.subTitle')}-${i18n.t('site.title')}`;
   }
   render () {
     const {store, history} = this.props
@@ -39,12 +41,11 @@ class Widget extends Component{
 
 Widget.propTypes = {
   signIn: PropTypes.func.isRequired,
-  refresh: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   store: PropTypes.object.isRequired
 }
 
 export default connect(
   state => ({}),
-  {signIn, refresh},
+  {signIn},
 )(Widget);

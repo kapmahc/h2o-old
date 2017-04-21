@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "antd": "^2.9.1",
+    "i18next": "^8.0.0",
+    "i18next-browser-languagedetector": "^1.0.1",
+    "i18next-xhr-backend": "^1.4.1",
     "jwt-decode": "^2.2.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

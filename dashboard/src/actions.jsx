@@ -1,4 +1,3 @@
-export const REFRESH_SITE_INFO = 'site.info.refresh'
 export const USERS_SIGN_IN = "users.sign-in"
 export const USERS_SIGN_OUT = "users.sign-out"
 
@@ -12,12 +11,5 @@ export const signIn = (token) => {
 export const signOut = () => {
   return {
     type: USERS_SIGN_OUT
-  }
-}
-
-export const refresh = (info) => {
-  return {
-    type: REFRESH_SITE_INFO,
-    info
   }
 }
