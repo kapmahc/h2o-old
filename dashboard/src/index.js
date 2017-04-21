@@ -12,7 +12,7 @@ i18n
   .use(LanguageDetector)
   .init({
     backend: {
-      loadPath: "/locales/{{lng}}",
+      loadPath: "/api/locales/{{lng}}",
       crossDomain: true,
     },
     detection: {

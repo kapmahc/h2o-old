@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 import { Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap'
 import i18n from 'i18next'
 
 import Icon from '../components/Icon'
 
 import plugins from '../plugins'
-import { push } from '../ajax'
 
-const Widget = ({children, push, user}) => (<Container>  
+const Widget = ({children, push, user}) => (<Container>
   {
     user.uid ?
       children :
