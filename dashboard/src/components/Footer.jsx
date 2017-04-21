@@ -1,27 +1,36 @@
 import React from 'react'
 import i18n from 'i18next'
-import { Row, Col } from 'reactstrap'
+import { Row, Col, Button, ButtonGroup } from 'reactstrap'
 
 import {LANGUAGES} from '../constants'
-
-const post = (path) => `/htdocs/${i18n.language}/posts/${path}`
+import PostLink from '../plugins/site/posts/Link'
 
 const Widget = () => (<Row>
   <Col md={{size:12}}>
     <hr />
     <footer>
-      <p className="float-right">
+      <div className="float-right">
         {i18n.t("footer.other-languages")}:
-        {LANGUAGES.map((o, i)=>(<a style={{marginLeft: "1rem"}} target="_blank" key={i} onClick={()=>i18n.changeLanguage(o)}>{i18n.t(`languages.${o}`)}</a>))}
-
-      </p>
+        <ButtonGroup>
+        {LANGUAGES.map((o, i)=>(<Button
+          color="link"
+          size="sm"
+          key={i}
+          onClick={()=>{
+            i18n.changeLanguage(o)
+            location.reload()
+          }}>
+          {i18n.t(`languages.${o}`)}
+        </Button>))}
+        </ButtonGroup>
+      </div>
       <p>&copy; {i18n.t('site.copyright')}
         &middot;
-        <a href={post('privacy')} target="_blank">{i18n.t("footer.privacy")}</a>
+        <PostLink name="privacy" label="footer.privacy"/>
         &middot;
-        <a href={post('terms')} target="_blank">{i18n.t("footer.terms")}</a>
+        <PostLink name="terms" label="footer.terms"/>
         &middot;
-        <a href={post('about')} target="_blank">{i18n.t("footer.about")}</a>
+        <PostLink name="about" label="footer.about"/>
       </p>
     </footer>
   </Col>

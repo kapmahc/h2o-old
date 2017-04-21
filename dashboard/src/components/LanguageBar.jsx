@@ -22,10 +22,17 @@ class Widget extends Component{
   render () {
     return (<NavDropdown isOpen={this.state.open} toggle={this.toggle}>
       <DropdownToggle nav caret>
-        Dropdown
+        {i18n.t('language-bar.switch')}
       </DropdownToggle>
       <DropdownMenu>
-        {LANGUAGES.map((o, i)=>(<DropdownItem key={i}>{i18n.t(`languages.${o}`)}</DropdownItem>))}
+        {LANGUAGES.map((o, i)=>(<DropdownItem
+          key={i}
+          onClick={()=>{
+            i18n.changeLanguage(o)
+            location.reload()
+          }}>
+          {i18n.t(`languages.${o}`)}
+        </DropdownItem>))}
       </DropdownMenu>
     </NavDropdown>)
   }
