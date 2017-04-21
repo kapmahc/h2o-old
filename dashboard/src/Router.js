@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect, Provider } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import {ConnectedRouter} from 'react-router-redux'
+import { ConnectedRouter } from 'react-router-redux'
 import { Container } from 'reactstrap'
 import i18n from 'i18next'
 
@@ -14,10 +14,10 @@ import {base} from './ajax'
 import NoMatch from './components/NoMatch'
 import Home from './components/Home'
 import Footer from './components/Footer'
+import Header from './components/Header'
 
 class Widget extends Component{
   componentDidMount() {
-    console.log('init')
     const { signIn } = this.props
     var token = sessionStorage.getItem(TOKEN)
     if (token){
@@ -30,6 +30,7 @@ class Widget extends Component{
     return (<Provider store={store}>
       <ConnectedRouter history={history}>
         <div>
+          <Header />
           <Switch>
             <Route exact path={base("/")} component={Home}/>
             {plugins.routes.map((r, i) => {

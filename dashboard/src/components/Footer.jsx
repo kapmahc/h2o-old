@@ -3,7 +3,6 @@ import i18n from 'i18next'
 import { Row, Col } from 'reactstrap'
 
 import {LANGUAGES} from '../constants'
-import {base} from '../ajax'
 
 const post = (path) => `/htdocs/${i18n.language}/posts/${path}`
 
@@ -13,7 +12,7 @@ const Widget = () => (<Row>
     <footer>
       <p className="float-right">
         {i18n.t("footer.other-languages")}:
-        {LANGUAGES.map((o, i)=>(<a style={{marginLeft: "1rem"}} target="_blank" key={i} href={`${base('/')}?locale=${o}`}>{i18n.t(`languages.${o}`)}</a>))}
+        {LANGUAGES.map((o, i)=>(<a style={{marginLeft: "1rem"}} target="_blank" key={i} onClick={()=>i18n.changeLanguage(o)}>{i18n.t(`languages.${o}`)}</a>))}
 
       </p>
       <p>&copy; {i18n.t('site.copyright')}

@@ -30,5 +30,12 @@ i18n
       htmlTag: document.documentElement
     },
   }, (err, t) => {
-    main('root');
+});
+
+i18n.on('languageChanged', function(lng) {
+  // set the moment locale with the current language
+  // moment.locale(lng);
+  // re-render your app
+  console.log('switch to lang '+lng)
+  main('root');
 });
