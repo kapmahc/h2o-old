@@ -118,7 +118,7 @@ func (p *Plugin) getUsersConfirmToken(c *gin.Context, l string) (string, error) 
 }
 
 func (p *Plugin) signInURL() string {
-	return "/dashboard/users/sign-in"
+	return "/users/sign-in"
 }
 
 type fmEmail struct {
