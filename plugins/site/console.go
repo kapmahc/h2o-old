@@ -15,6 +15,7 @@ import (
 	"github.com/BurntSushi/toml"
 	log "github.com/Sirupsen/logrus"
 	"github.com/facebookgo/inject"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
@@ -598,13 +599,13 @@ func (p *Plugin) runServer(*cli.Context, *inject.Graph) error {
 		p.I18n.Middleware,
 	)
 	ht, api := p.Wrap.Group(rt)
-	// cfg := cors.DefaultConfig()
-	// cfg.AllowMethods = append(cfg.AllowMethods, http.MethodDelete, http.MethodPatch)
-	// cfg.AllowCredentials = true
-	// cfg.AllowHeaders = append(cfg.AllowHeaders, "Authorization")
-	// cfg.AllowOrigins = []string{web.Home()}
+	cfg := cors.DefaultConfig()
+	cfg.AllowMethods = append(cfg.AllowMethods, http.MethodDelete, http.MethodPatch)
+	cfg.AllowCredentials = true
+	cfg.AllowHeaders = append(cfg.AllowHeaders, "Authorization")
+	cfg.AllowOrigins = []string{web.Home(), "http://localhost:3000"}
 	api.Use(
-		// cors.New(cfg),
+		cors.New(cfg),
 		p.Jwt.CurrentUserMiddleware,
 	)
 	web.Walk(func(en web.Plugin) error {

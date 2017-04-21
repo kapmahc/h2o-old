@@ -37,6 +37,7 @@ export default {
       label: "auth.users.unlock.title",
       icon: "lock_open"
     },
+    null,
     {
       to: "/leave-words/new",
       label: "site.leave-words.new.title",

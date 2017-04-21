@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavDropdown,DropdownToggle,DropdownMenu,DropdownItem } from 'reactstrap'
+import { NavDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import i18n from 'i18next'
 
 import {LANGUAGES} from '../constants'

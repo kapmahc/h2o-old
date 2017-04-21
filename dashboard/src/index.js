@@ -4,8 +4,8 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import './main.css';
 import main from './main'
-import {LOCALE} from './constants'
 
+const LOCALE = 'locale';
 
 i18n
   .use(XHR)
@@ -29,11 +29,13 @@ i18n
       // optional htmlTag with lang attribute, the default is:
       htmlTag: document.documentElement
     },
-  }, (err, t) => {
-    main('root');
-});
+  }, (err, er)=>{
+    main('root')
+  });
 
-i18n.on('languageChanged', function(lng) {
-  // set the moment locale with the current language
-  // moment.locale(lng);  
-});
+  i18n.on('languageChanged', function(lng) {
+    // set the moment locale with the current language
+    // moment.locale(lng);
+  });
+
+  export default i18n;

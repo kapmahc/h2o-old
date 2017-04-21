@@ -18,7 +18,7 @@ const Widget = ({children, push, user}) => (<Container>
           {children}
           <br/>
           <ListGroup>
-            {plugins.nonSignInLinks.map((o,i)=>(<ListGroupItem key={i} onClick={()=>push(o.to)} action>
+            {plugins.nonSignInLinks.filter((o)=> o!=null ).map((o,i)=>(<ListGroupItem key={i} onClick={()=>push(o.to)} action>
               <Icon name={o.icon}/>
               &nbsp;
               {i18n.t(o.label)}
@@ -34,6 +34,7 @@ Widget.propTypes = {
   push: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired
 }
+
 
 export default connect(
   state => ({user: state.currentUser}),

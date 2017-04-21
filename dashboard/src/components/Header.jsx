@@ -5,6 +5,7 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } f
 import i18n from 'i18next'
 
 import LanguageBar from './LanguageBar'
+import PersonalBar from './PersonalBar'
 import SearchForm from './SearchForm'
 
 class Widget extends Component {
@@ -33,6 +34,7 @@ class Widget extends Component {
           <NavItem>
             <NavLink href="https://github.com/reactstrap/reactstrap">Github</NavLink>
           </NavItem>
+          <PersonalBar />
           <LanguageBar />
         </Nav>
         <SearchForm />
