@@ -6,6 +6,8 @@ import i18n from 'i18next'
 import { Layout, Menu } from 'antd'
 const { Header } = Layout
 
+import PersonalBar from './PersonalBar'
+
 class Widget extends Component {
   render() {
     const {user} = this.props
@@ -25,7 +27,7 @@ class Widget extends Component {
         defaultSelectedKeys={['1']}
         style={{ lineHeight: '64px' }}
       >
-        {items.map((o, i) => <Menu.Item key={i}>{i18n.t(o.label)}</Menu.Item>)}
+        {items.map((o, i) => <Menu.Item key={i}>{i18n.t(o.label)}</Menu.Item>)}        
       </Menu>
     </Header>)
   }

@@ -18,6 +18,14 @@ class Widget extends Component {
         <Row>
           <Col offset={4} span={16}>{children}</Col>
         </Row>
+        <Row>
+          <Col offset={6} span={8}>
+            <ul>
+              <li>aaa</li>
+              <li>bbb</li>
+            </ul>
+          </Col>
+        </Row>
       </Content>
       <Footer />
     </Layout>)
