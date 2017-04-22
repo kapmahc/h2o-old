@@ -34,9 +34,9 @@ class Widget extends Component {
       <NavbarBrand href="/" target="_blank">{i18n.t('site.subTitle')}</NavbarBrand>
       <Collapse isOpen={this.state.isOpen} navbar>
         <Nav className="mr-auto" navbar>
-          <NavItem>
+          {user.uid ? (<NavItem>
             <NavLink onClick={()=>push('/my')}>{i18n.t('header.dashboard')}</NavLink>
-          </NavItem>
+          </NavItem>) : null}          
           {plugins.dashboard(user).map((o,i)=>(<NavBarItem key={i} label={o.label} items={o.items} />))}
           <PersonalBar />
           <LanguageBar />

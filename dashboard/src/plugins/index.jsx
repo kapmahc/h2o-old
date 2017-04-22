@@ -1,13 +1,13 @@
 import auth from './auth'
-// import site from './site'
+import site from './site'
 // import reading from './reading'
 // import forum from './forum'
 
 const plugins = {
-  auth
+  auth,  
+  site,
   // forum,
   // reading,
-  // site,
 }
 
 export default {

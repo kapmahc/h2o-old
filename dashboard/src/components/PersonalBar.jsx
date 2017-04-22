@@ -7,6 +7,7 @@ import i18n from 'i18next'
 
 import plugins from '../plugins'
 import {signOut} from '../actions'
+import {_delete} from '../ajax'
 
 class Widget extends Component{
   constructor(props) {
@@ -32,6 +33,7 @@ class Widget extends Component{
           label: 'personal-bar.sign-out',
           on: ()=>{
             if(confirm(i18n.t('are-you-sure'))){
+              _delete('/api/users/sign-out')
               push('/users/sign-in')
               sessionStorage.clear();
               signOut()
@@ -51,7 +53,7 @@ class Widget extends Component{
             if(o.on){
               o.on()
             }else{
-              push(o.to)              
+              push(o.to)
             }
           }}>
           {i18n.t(o.label)}
