@@ -12,6 +12,7 @@ import plugins from './plugins'
 
 import NoMatch from './components/NoMatch'
 import Home from './components/Home'
+import Dashboard from './components/Dashboard'
 import Footer from './components/Footer'
 import Header from './components/Header'
 
@@ -32,7 +33,8 @@ class Widget extends Component{
         <div>
           <Header />
           <Switch>
-            <Route exact path="/my" component={Home}/>
+            <Route exact path="/" component={Home}/>
+            <Route path="/my" component={Dashboard}/>
             {plugins.routes.map((r, i) => {
               return (<Route path={r.path} component={r.component} key={i} />)
             })}

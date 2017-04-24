@@ -1,3 +1,4 @@
+import SiteStatus from './admin/Status'
 
 export default {
   dashboard (user){
@@ -77,5 +78,6 @@ export default {
     return items
   },
   routes: [
+    {path: "/admin/site/status", component: SiteStatus},
   ]
 }
