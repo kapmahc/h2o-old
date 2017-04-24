@@ -1,4 +1,8 @@
 import SiteStatus from './admin/Status'
+import SiteInfo from './admin/Info'
+import SiteAuthor from './admin/Author'
+import SiteSeo from './admin/Seo'
+import SiteSmtp from './admin/Smtp'
 
 export default {
   dashboard (user){
@@ -79,5 +83,9 @@ export default {
   },
   routes: [
     {path: "/admin/site/status", component: SiteStatus},
+    {path: "/admin/site/info", component: SiteInfo},
+    {path: "/admin/site/author", component: SiteAuthor},
+    {path: "/admin/site/seo", component: SiteSeo},
+    {path: "/admin/site/smtp", component: SiteSmtp},
   ]
 }

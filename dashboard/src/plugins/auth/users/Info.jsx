@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
 import { Form, FormGroup, Label, Input } from 'reactstrap'
 import i18n from 'i18next'
 
@@ -75,11 +72,4 @@ class Widget extends Component {
   }
 }
 
-Widget.propTypes = {
-  push: PropTypes.func.isRequired
-}
-
-export default connect(
-  state => ({}),
-  {push}
-)(Widget)
+export default Widget
